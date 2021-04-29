@@ -105,22 +105,7 @@ const serverlessConfiguration: AWS = {
       JWT_AUTH_SECRET: '${self:custom.customEnv.JWT_AUTH_SECRET.${opt:stage}}',
       SENDGRID_API_KEY: '${ssm:/staging/external/sendgrid_api_key~true}'
     }
-    // iamRoleStatements: [
-    //   {
-    //     Effect: "Allow",
-    //     Action: ["ssm:GetParameter"],
-    //     Resource: ["Fn::Join", ":", [[]]]
-    //   },
-    //   {
-    //     Effect: "Allow",
-    //     Action: ["kms:Decrypt"],
-    //     Resource: [
-    //       "arn:aws:kms:sa-east-1:886760609264:key/951107a1-733a-45de-ba30-64ee686e43c7"
-    //     ]
-    //   }
-    // ]
   },
-
   functions: {
     enrichment: {
       handler: 'src/main/routes/campaign-routes.handle',
