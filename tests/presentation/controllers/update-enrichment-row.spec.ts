@@ -10,6 +10,7 @@ import { mockUploadedDataModel } from '../../domain/mocks/uploaded-data'
 import { ChargeCreditsSpy } from '../../data/mocks/credits'
 import { FindUploadedBaseSpy, UpdateUploadedBaseSpy } from '../mocks/uploaded-base'
 
+let rowArray = []
 type SutTypes = {
   sut: UpdateEnrichmentRowController
   decrypterSpy: DecrypterSpy
@@ -44,10 +45,7 @@ const makeSut = (): SutTypes => {
     updateUploadedBaseSpy
   }
 }
-let rowArray = []
-for (let i = 0; i < random.number(5); i++) {
-  rowArray.push(mockEnrichmentRow())
-}
+
 const mockRequest = {
   row: rowArray,
   token: random.alphaNumeric()
@@ -57,6 +55,11 @@ const mockDecryptResponse = {
   schemaName: random.word()
 }
 describe('UpdateEnrichmentRowController', () => {
+  beforeAll(() => {
+    for (let i = 0; i < random.number(5); i++) {
+      rowArray.push(mockEnrichmentRow())
+    }
+  })
   test('should return 400 if no row is provided', async () => {
     const { sut } = makeSut()
     const response = await sut.handle({
@@ -123,7 +126,11 @@ describe('UpdateEnrichmentRowController', () => {
     )
     const enrichmentRow = mockUploadedDataModel()
     enrichmentRow.row_enrichment = JSON.parse(JSON.stringify(rowArray))
-    if (!enrichmentRow?.row_enrichment[0]?.result) enrichmentRow.row_enrichment[0].result = ''
+    if (enrichmentRow) {
+      if (!enrichmentRow?.row_enrichment[0]?.result) {
+        enrichmentRow.row_enrichment[0].result = ''
+      }
+    }
     enrichmentRow.row_enrichment[0].result = ''
     let chargeCount = 0
     rowArray.map((column) => {
