@@ -10,7 +10,8 @@ export class CreateCampaignPostgresRepository implements ICreateCampaignReposito
   async create(campaignData: ICreateCampaign.Params, schemaName: string): Promise<ICampaignModel> {
     try {
       let finalData: ICampaignModel = { uuid: v4(), ...campaignData }
-      const campaignRepository = (await connect(schemaName)).manager.getRepository(Campaign)
+      const connection = await connect(schemaName)
+      const campaignRepository = connection.manager.getRepository(Campaign)
       const result: ICampaignModel = await campaignRepository.save(finalData)
       return new Promise((resolve) => resolve(result))
     } catch (error) {
