@@ -70,11 +70,11 @@ describe('LogController Decorator', () => {
       body: expectedBody
     }
     await sut.handle(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
     expect(handleSpy).toHaveBeenCalledWith(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
   })
@@ -85,7 +85,7 @@ describe('LogController Decorator', () => {
       body: expectedBody
     }
     const httpResponse = await sut.handle(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
     expect(httpResponse).toEqual({

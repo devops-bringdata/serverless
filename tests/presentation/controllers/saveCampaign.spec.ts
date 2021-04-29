@@ -105,7 +105,7 @@ describe('Save Campaign Controller', () => {
     const createSpy = jest.spyOn(createCampaignStub, 'create')
     let httpRequest = JSON.parse(JSON.stringify(expectedBody))
     sut.handle(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
     expect(createSpy).toHaveBeenCalledWith(
@@ -134,7 +134,7 @@ describe('Save Campaign Controller', () => {
           title: 'some_string'
         }
       },
-      'bringdata-jest'
+      'bringdatajest'
     )
   })
 
@@ -145,7 +145,7 @@ describe('Save Campaign Controller', () => {
     })
     const httpRequest = JSON.parse(JSON.stringify(expectedBody))
     const httpResponse = await sut.handle(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
     expect(httpResponse.statusCode).toBe(500)
@@ -157,7 +157,7 @@ describe('Save Campaign Controller', () => {
     let httpRequest = JSON.parse(JSON.stringify(expectedBody))
     delete httpRequest.name
     const httpResponse = await sut.handle(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
     expect(httpResponse.statusCode).toBe(200)
@@ -169,7 +169,7 @@ describe('Save Campaign Controller', () => {
     let httpRequest = JSON.parse(JSON.stringify(expectedBody))
     delete httpRequest.emailTemplate.buttonLabel
     const httpResponse = await sut.handle(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
     expect(httpResponse.statusCode).toBe(200)
@@ -180,17 +180,17 @@ describe('Save Campaign Controller', () => {
     const findRowsSpy = jest.spyOn(startEnrichment, 'start')
     let httpRequest = JSON.parse(JSON.stringify(expectedBody))
     await sut.handle(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
-    expect(findRowsSpy).toHaveBeenCalledWith('valid_id', 'any_group_id', 'bringdata-jest')
+    expect(findRowsSpy).toHaveBeenCalledWith('valid_id', 'any_group_id', 'bringdatajest')
   })
 
   test('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = JSON.parse(JSON.stringify(expectedBody))
     const httpResponse = await sut.handle(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
     expect(httpResponse.statusCode).toBe(200)
@@ -226,7 +226,7 @@ describe('Save Campaign Controller', () => {
     const httpRequest = JSON.parse(JSON.stringify(expectedBody))
     const validateSpy = jest.spyOn(validationStub, 'validate')
     await sut.handle(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
     expect(validateSpy).toHaveBeenCalledWith(httpRequest)
@@ -236,7 +236,7 @@ describe('Save Campaign Controller', () => {
     const httpRequest = JSON.parse(JSON.stringify(expectedBody))
     jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('any_field'))
     const httpResponse = await sut.handle(httpRequest, {
-      schemaName: 'bringdata-jest',
+      schemaName: 'bringdatajest',
       uuid: 'any_id'
     })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')))

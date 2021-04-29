@@ -53,8 +53,8 @@ describe('DbCreateCampaign', () => {
     const { sut, createCampaignRepositoryStub } = makeSut()
     const createSpy = jest.spyOn(createCampaignRepositoryStub, 'create')
     const campaignData: ICreateCampaign.Params = JSON.parse(JSON.stringify(mockCampaignData))
-    await sut.create(campaignData, 'bringdata-jest')
-    expect(createSpy).toHaveBeenCalledWith(campaignData, 'bringdata-jest')
+    await sut.create(campaignData, 'bringdatajest')
+    expect(createSpy).toHaveBeenCalledWith(campaignData, 'bringdatajest')
   })
 
   test('Should throw if create throws', async () => {
@@ -62,13 +62,13 @@ describe('DbCreateCampaign', () => {
     jest
       .spyOn(createCampaignRepositoryStub, 'create')
       .mockReturnValueOnce(new Promise((_resolve, reject) => reject(new Error())))
-    const promise = sut.create(mockCampaignModel(), 'bringdata-jest')
+    const promise = sut.create(mockCampaignModel(), 'bringdatajest')
     await expect(promise).rejects.toThrow()
   })
   test('Should return an account on success', async () => {
     const { sut } = makeSut()
     const campaignData: ICreateCampaign.Params = JSON.parse(JSON.stringify(mockCampaignData))
-    const account = await sut.create(campaignData, 'bringdata-jest')
+    const account = await sut.create(campaignData, 'bringdatajest')
     expect(account).toEqual(campaignData)
   })
 })

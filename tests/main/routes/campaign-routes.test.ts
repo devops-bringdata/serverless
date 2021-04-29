@@ -31,8 +31,8 @@ let accessToken
 describe('Campaign routes', () => {
   beforeAll(async () => {
     disconnect()
-    await connect('bringdata-jest')
-    accessToken = sign({ schemaName: 'bringdata-jest', id: 'any_id' }, '4aa04f57a84d4d1655b7ba575d7f7794')
+    await connect('bringdatajest')
+    accessToken = sign({ schemaName: 'bringdatajest', id: 'any_id' }, '4aa04f57a84d4d1655b7ba575d7f7794')
   })
 
   beforeEach(async () => {

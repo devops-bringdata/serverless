@@ -19,7 +19,7 @@ describe('GetEnrichmentDataByCampaign', () => {
     const response = await sut.handle(
       { groupId: null },
       {
-        schemaName: 'bringdata-jest',
+        schemaName: 'bringdatajest',
         uuid: 'any_id'
       }
     )
@@ -30,11 +30,11 @@ describe('GetEnrichmentDataByCampaign', () => {
     await sut.handle(
       { groupId: 'any_group_id' },
       {
-        schemaName: 'bringdata-jest',
+        schemaName: 'bringdatajest',
         uuid: 'any_id'
       }
     )
     expect(findUploadedDataByGroupIdSpy.groupId).toBe('any_group_id')
-    expect(findUploadedDataByGroupIdSpy.schemaName).toBe('bringdata-jest')
+    expect(findUploadedDataByGroupIdSpy.schemaName).toBe('bringdatajest')
   })
 })

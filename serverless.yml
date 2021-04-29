@@ -80,7 +80,7 @@ provider:
     DB_PASSWORD: '${self:custom.customEnv.DB_PASSWORD.${opt:stage}}'
     DB_PORT: '${self:custom.customEnv.DB_PORT.${opt:stage}}'
     DB_USERNAME: '${self:custom.customEnv.DB_USERNAME.${opt:stage}}'
-    TEST_DATABASE: bringdata-jest
+    TEST_DATABASE: bringdatajest
     JWT_AUTH_SECRET: '${self:custom.customEnv.JWT_AUTH_SECRET.${opt:stage}}'
     SENDGRID_API_KEY: '${ssm:/staging/external/sendgrid_api_key~true}'
 functions:

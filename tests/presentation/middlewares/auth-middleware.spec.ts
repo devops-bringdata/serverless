@@ -23,7 +23,7 @@ const makeSut = (): SutTypes => {
     getTenantByTokenStub
   }
 }
-const mockAccessToken = sign({ schemaName: 'bringdata-jest' }, 'any_secret')
+const mockAccessToken = sign({ schemaName: 'bringdatajest' }, 'any_secret')
 const makeFakeRequest = (): IHttpRequest => ({
   headers: {
     authorization: mockAccessToken

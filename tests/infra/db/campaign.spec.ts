@@ -30,7 +30,7 @@ const mockCampaignData = {
 describe('Campaign Postgres Repository', () => {
   beforeAll(async () => {
     disconnect()
-    await connect('bringdata-jest')
+    await connect('bringdatajest')
   })
 
   beforeEach(async () => {
@@ -55,7 +55,7 @@ describe('Campaign Postgres Repository', () => {
   }
   test('Should return an account on success', async () => {
     const { sut } = makeSut()
-    const campaign = await sut.create(mockCampaignData, 'bringdata-jest')
+    const campaign = await sut.create(mockCampaignData, 'bringdatajest')
     console.log(campaign)
     expect(campaign).toBeTruthy()
     expect(campaign.uuid).toBeTruthy()
@@ -86,13 +86,13 @@ describe('Campaign Postgres Repository', () => {
   test('should throw if connect throws', async () => {
     const { sut } = makeSut()
     jest.spyOn(sut, 'create').mockReturnValueOnce(new Promise((_resolve, reject) => reject(new Error())))
-    const promise = sut.create(mockCampaignData, 'bringdata-jest')
+    const promise = sut.create(mockCampaignData, 'bringdatajest')
     await expect(promise).rejects.toThrow()
   })
   test('should throw if connect throws', async () => {
     const { sut } = makeSut()
     jest.spyOn(sut, 'create').mockReturnValueOnce(new Promise((_resolve, reject) => reject(new Error())))
-    const promise = sut.create(mockCampaignData, 'bringdata-jest')
+    const promise = sut.create(mockCampaignData, 'bringdatajest')
     await expect(promise).rejects.toThrow()
   })
 })
