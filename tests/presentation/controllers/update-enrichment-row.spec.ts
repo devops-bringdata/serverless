@@ -127,9 +127,9 @@ describe('UpdateEnrichmentRowController', () => {
     const enrichmentRow = mockUploadedDataModel()
     enrichmentRow.row_enrichment = JSON.parse(JSON.stringify(rowArray))
     if (enrichmentRow) {
-      if (!enrichmentRow?.row_enrichment[0]?.result) {
-        enrichmentRow.row_enrichment[0].result = ''
-      }
+      if (!enrichmentRow.row_enrichment[0]) {
+        enrichmentRow.row_enrichment = []
+        enrichmentRow.row_enrichment.push(mockEnrichmentRow())
     }
     enrichmentRow.row_enrichment[0].result = ''
     let chargeCount = 0
