@@ -48,7 +48,10 @@ export class EnrichRow implements IEnrichRow {
     if (enrichmentRow.length !== 0) {
       row.row_enrichment = enrichmentRow
       await this.updateUploadedData.update(rowId, row, schemaName)
-
+      const hashLink = await this.encrypter.encrypt({
+        schemaName,
+        uuid: rowId
+      })
       const templateData = {
         title: campaign.emailTemplate.title,
         text: campaign.emailTemplate.text,
@@ -57,10 +60,8 @@ export class EnrichRow implements IEnrichRow {
         logo: campaign.emailTemplate.logo,
         subject: campaign.emailTemplate.subject,
         greeting: campaign.emailTemplate.greeting,
-        enrichmentLink: await this.encrypter.encrypt({
-          schemaName,
-          uuid: rowId
-        })
+        enrichmentLink: `https://app-staging.bringdata.co/data-update/${{ hashLink }}/`,
+        environment: process.env.ENVIRONMENT
       }
       const sendResponse = await this.emailSender.send({
         to: email,
