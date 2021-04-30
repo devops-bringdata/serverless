@@ -60,8 +60,10 @@ export class EnrichRow implements IEnrichRow {
         logo: campaign.emailTemplate.logo,
         subject: campaign.emailTemplate.subject,
         greeting: campaign.emailTemplate.greeting,
-        enrichmentLink: `https://app-staging.bringdata.co/data-update/${{ hashLink }}/`,
-        environment: process.env.ENVIRONMENT
+        enrichmentLink:
+          process.env.ENVIRONMENT === 'staging'
+            ? `https://app-staging.bringdata.co/data-update/${{ hashLink }}/`
+            : `https://app.bringdata.co/data-update/${{ hashLink }}/`
       }
       const sendResponse = await this.emailSender.send({
         to: email,
