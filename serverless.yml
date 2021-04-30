@@ -11,6 +11,21 @@ custom:
         - aws-sdk
   serverless-offline:
     httpPort: 3006
+  vpc:
+    production:
+      securityGroupIds:
+        - sg-033afd581a289817f
+      subnetIds:
+        - subnet-0c0e0bea929fe16d3
+        - subnet-071d88f0907454f2a
+        - subnet-052ca465572fe5620
+    staging:
+      securityGroupIds:
+        - sg-0b23f4711ab21127c
+      subnetIds:
+        - subnet-04019329298c75baf
+        - subnet-0f4da0a963853b8df
+        - subnet-004712f5be4ccd57f
   vpcId:
     staging: vpc-03a2ecbe2d8d6f8f0
     production: vpc-041c1f841163ba45e
@@ -39,22 +54,6 @@ custom:
       development: 4aa04f57a84d4d1655b7ba575d7f7794
       staging: '${ssm:/staging/external/jwt_auth_secret~true}'
       production: '${ssm:/production/external/jwt_auth_secret~true}'
-    SUBNET_1:
-      staging: subnet-04019329298c75baf
-      production: subnet-0c0e0bea929fe16d3
-    SUBNET_2:
-      staging: subnet-0f4da0a963853b8df
-      production: subnet-071d88f0907454f2a
-    SUBNET_3:
-      staging: subnet-004712f5be4ccd57f
-      production: subnet-052ca465572fe5620
-resources:
-  Resources:
-    LambdaSecurityGroup:
-      Type: AWS::EC2::SecurityGroup
-      Properties:
-        GroupDescription: EnrichmentLambda
-        VpcId: '${self:custom.vpcId.${opt:stage}}'
 plugins:
   - serverless-webpack
   - serverless-offline
@@ -65,13 +64,7 @@ provider:
   apiGateway:
     minimumCompressionSize: 1024
     shouldStartNameWithService: true
-  vpc:
-    securityGroupIds:
-      - Ref: LambdaSecurityGroup
-    subnetIds:
-      - '${self:custom.customEnv.SUBNET_1.${opt:stage}}'
-      - '${self:custom.customEnv.SUBNET_2.${opt:stage}}'
-      - '${self:custom.customEnv.SUBNET_3.${opt:stage}}'
+  vpc: ${self:custom.vpc.${opt:stage}}
   region: sa-east-1
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
@@ -83,8 +76,9 @@ provider:
     TEST_DATABASE: bringdatajest
     JWT_AUTH_SECRET: '${self:custom.customEnv.JWT_AUTH_SECRET.${opt:stage}}'
     SENDGRID_API_KEY: '${ssm:/staging/external/sendgrid_api_key~true}'
+    ENVIRONMENT: '${opt:stage}'
 functions:
-  enrichment:
+  createCampaign:
     handler: src/main/routes/campaign-routes.handle
     events:
       - http:
@@ -120,7 +114,7 @@ functions:
       - http:
           method: any
           path: charge-credits
-  finishGroupValidation:
+  finishValidation:
     handler: src/main/routes/validation-routes.handle
     events:
       - http:
@@ -132,3 +126,9 @@ functions:
       - http:
           method: any
           path: validate-single-email
+  health:
+    handler: src/main/routes/health.handle
+    events:
+      - http:
+          method: get
+          path: health
