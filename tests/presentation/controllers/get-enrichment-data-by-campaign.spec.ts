@@ -1,16 +1,16 @@
-import { GetEnrichmentDataByCampaignController } from '@/presentation/controllers/enrichment/get-enrichment-data-by-campaign'
+import { GetEnrichmentDataByCreateCampaignController } from '@/presentation/controllers/enrichment/get-enrichment-data-by-campaign'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest } from '@/presentation/helpers'
 import { FindUploadedDataByGroupIdSpy } from '../../data/mocks'
 import { FindUploadedBaseSpy } from '../mocks/uploaded-base'
 type SutTypes = {
   findUploadedDataByGroupIdSpy: FindUploadedDataByGroupIdSpy
-  sut: GetEnrichmentDataByCampaignController
+  sut: GetEnrichmentDataByCreateCampaignController
 }
 const makeSut = (): SutTypes => {
   const findUploadedDataByGroupIdSpy = new FindUploadedDataByGroupIdSpy()
   const findUploadedBaseSpy = new FindUploadedBaseSpy()
-  const sut = new GetEnrichmentDataByCampaignController(findUploadedDataByGroupIdSpy, findUploadedBaseSpy)
+  const sut = new GetEnrichmentDataByCreateCampaignController(findUploadedDataByGroupIdSpy, findUploadedBaseSpy)
   return { sut, findUploadedDataByGroupIdSpy }
 }
 describe('GetEnrichmentDataByCampaign', () => {

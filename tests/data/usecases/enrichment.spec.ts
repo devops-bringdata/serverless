@@ -2,16 +2,16 @@ import { StartEnrichment } from '../../../src/data/usecases/start-enrichment/sta
 import { MissingParamError } from '../../../src/presentation/errors'
 import { badRequest } from '../../../src/presentation/helpers'
 import { IStartEnrichment } from '../../../src/domain/usecases/enrichment/start-enrichment'
-import { DbFindCampaignSpy, EnrichRowSpy, FindUploadedDataByGroupIdSpy } from '../mocks'
+import { FindCampaignRepositorySpy, EnrichRowSpy, FindUploadedDataByGroupIdSpy } from '../mocks'
 
 type SutTypes = {
   sut: IStartEnrichment
   dbFindUploadedDataByGroupIdSpy: FindUploadedDataByGroupIdSpy
-  dbFindCampaignSpy: DbFindCampaignSpy
+  dbFindCampaignSpy: FindCampaignRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
-  const dbFindCampaignSpy = new DbFindCampaignSpy()
+  const dbFindCampaignSpy = new FindCampaignRepositorySpy()
   const dbFindUploadedDataByGroupIdSpy = new FindUploadedDataByGroupIdSpy()
   const enrichRowSpy = new EnrichRowSpy()
   const sut = new StartEnrichment(dbFindUploadedDataByGroupIdSpy, dbFindCampaignSpy, enrichRowSpy)

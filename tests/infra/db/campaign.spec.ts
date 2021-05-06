@@ -56,7 +56,6 @@ describe('Campaign Postgres Repository', () => {
   test('Should return an account on success', async () => {
     const { sut } = makeSut()
     const campaign = await sut.create(mockCampaignData, 'bringdatajest')
-    console.log(campaign)
     expect(campaign).toBeTruthy()
     expect(campaign.uuid).toBeTruthy()
     expect(campaign.name).toBe('valid_name')

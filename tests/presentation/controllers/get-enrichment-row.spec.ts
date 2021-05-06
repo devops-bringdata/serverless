@@ -2,7 +2,7 @@ import { MissingParamError } from '@/presentation/errors'
 import { badRequest } from '@/presentation/helpers'
 import { IController } from '@/presentation/protocols'
 import { GetEnrichmentRowController } from '@/presentation/controllers/enrichment/get-enrichment-row'
-import { GetEnrichmentRowSpy, DecrypterSpy, DbFindCampaignSpy } from '../../data/mocks'
+import { GetEnrichmentRowSpy, DecrypterSpy, FindCampaignRepositorySpy } from '../../data/mocks'
 import { random } from 'faker'
 
 type SutTypes = {
@@ -13,7 +13,7 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const getEnrichmentRowSpy = new GetEnrichmentRowSpy()
   const decrypterSpy = new DecrypterSpy()
-  const findCampaignSpy = new DbFindCampaignSpy()
+  const findCampaignSpy = new FindCampaignRepositorySpy()
   const sut = new GetEnrichmentRowController(getEnrichmentRowSpy, findCampaignSpy, decrypterSpy)
   return { sut, getEnrichmentRowSpy, decrypterSpy }
 }

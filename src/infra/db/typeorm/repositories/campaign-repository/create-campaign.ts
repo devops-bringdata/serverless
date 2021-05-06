@@ -14,8 +14,6 @@ export class CreateCampaignPostgresRepository implements ICreateCampaignReposito
       const campaignRepository = connection.manager.getRepository(Campaign)
       const result: ICampaignModel = await campaignRepository.save(finalData)
       return new Promise((resolve) => resolve(result))
-    } catch (error) {
-      console.log(error)
-    }
+    } catch (error) {}
   }
 }

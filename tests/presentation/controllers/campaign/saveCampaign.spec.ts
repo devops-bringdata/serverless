@@ -1,6 +1,6 @@
 import { ICampaignModel } from '@/domain/models/campaign/campaign'
 import { ICreateCampaign } from '@/domain/usecases/campaign/create-campaign'
-import { CampaignController } from '@/presentation/controllers/campaign/campaign'
+import { CreateCampaignController } from '@/presentation/controllers/campaign/create-campaign'
 import { MissingParamError, ServerError } from '@/presentation/errors'
 import { badRequest } from '@/presentation/helpers'
 import { IStartEnrichment } from '@/domain/usecases/enrichment/start-enrichment'
@@ -37,7 +37,7 @@ describe('Save Campaign Controller', () => {
   }
 
   type SutTypes = {
-    sut: CampaignController
+    sut: CreateCampaignController
     createCampaignStub: ICreateCampaign
     startEnrichment: IStartEnrichment
     validationStub: IValidation
@@ -46,7 +46,7 @@ describe('Save Campaign Controller', () => {
     const createCampaignStub = makeCreateCampaign()
     const startEnrichment = makeStartEnrichment()
     const validationStub = makeValidation()
-    const sut = new CampaignController(validationStub, createCampaignStub, startEnrichment)
+    const sut = new CreateCampaignController(validationStub, createCampaignStub, startEnrichment)
     return { sut, createCampaignStub, startEnrichment, validationStub }
   }
   const makeValidation = (): IValidation => {

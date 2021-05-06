@@ -2,17 +2,17 @@ import { StartEnrichment } from '@/data/usecases'
 import { MissingParamError, ServerError } from '@/presentation/errors'
 import { badRequest, serverError } from '@/presentation/helpers'
 import { mockCampaignModel } from '../../domain/mocks'
-import { DbFindCampaignSpy, EnrichRowSpy, FindUploadedDataByGroupIdSpy } from '../mocks'
+import { FindCampaignRepositorySpy, EnrichRowSpy, FindUploadedDataByGroupIdSpy } from '../mocks'
 
 type SutTypes = {
   sut: StartEnrichment
   findUploadedDataByGroupIdSpy: FindUploadedDataByGroupIdSpy
-  findCampaignSpy: DbFindCampaignSpy
+  findCampaignSpy: FindCampaignRepositorySpy
   enrichRowSpy: EnrichRowSpy
 }
 const makeSut = (): SutTypes => {
   const findUploadedDataByGroupIdSpy = new FindUploadedDataByGroupIdSpy()
-  const findCampaignSpy = new DbFindCampaignSpy()
+  const findCampaignSpy = new FindCampaignRepositorySpy()
   const enrichRowSpy = new EnrichRowSpy()
   const sut: StartEnrichment = new StartEnrichment(findUploadedDataByGroupIdSpy, findCampaignSpy, enrichRowSpy)
   return { sut, findUploadedDataByGroupIdSpy, findCampaignSpy, enrichRowSpy }

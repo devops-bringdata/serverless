@@ -1,5 +1,5 @@
 import { IFindCampaignRepository } from 'data/protocols/db/campaign/find-campaign-repository'
-import { IFindCampaign } from 'domain/usecases/campaign/find-campaign'
+import { IFindCampaign } from '@/domain/usecases/campaign/find-campaign'
 import { ICampaignModel } from '@/domain/models/campaign/campaign'
 
 export class DbFindCampaign implements IFindCampaign {

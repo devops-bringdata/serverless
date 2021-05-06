@@ -1,4 +1,4 @@
-import { CampaignController } from '@/presentation/controllers/campaign/campaign'
+import { CreateCampaignController } from '@/presentation/controllers/campaign/create-campaign'
 import {
   DbCreateCampaign,
   DbFindCampaign,
@@ -18,8 +18,9 @@ import { SendgridAdapter } from '@/infra/email-sender/sendgrid-adapter'
 import { DbUpdateUploadedData } from '@/data/usecases/db-update-uploaded-data/db-update-uploaded-data'
 import { UpdateUploadedDataRepository } from '@/infra/db/typeorm/repositories/uploaded-data/update-uploaded-data-repository'
 import { JwtAdapter } from '@/infra/criptography/jwt-adapter'
-
-export const makeCampaignController = (): IController => {
+import { GetCampaignListController } from '@/presentation/controllers/campaign/get-campaign-list'
+import { GetCampaignListRepository } from '@/infra/db/typeorm/repositories/campaign-repository/get-campaign-list'
+export const makeCreateCampaignController = (): IController => {
   const campaignRepository = new CreateCampaignPostgresRepository()
   const createCampaign = new DbCreateCampaign(campaignRepository)
   const findUploadedDataByGroupIdRepository = new FindUploadedDataByGroupIdRepository()
@@ -32,7 +33,16 @@ export const makeCampaignController = (): IController => {
   const encrypter = new JwtAdapter(process.env.JWT_AUTH_SECRET)
   const enrichRow = new EnrichRow(emailSender, updateUploadedData, encrypter)
   const startEnrichment = new StartEnrichment(findUploadedDataByGroupId, findCampaign, enrichRow)
-  const campaignController = new CampaignController(makeCampaignValidation(), createCampaign, startEnrichment)
+  const campaignController = new CreateCampaignController(makeCampaignValidation(), createCampaign, startEnrichment)
   let logErrorRepository: ILogErrorRepository = new LogLogDnaRepository()
+
   return new LogControllerDecorator(campaignController, logErrorRepository)
+}
+
+export const makeCreateGetCampaignListController = (): IController => {
+  const getCampaignListRepository = new GetCampaignListRepository()
+  const getCampaignListController = new GetCampaignListController(getCampaignListRepository)
+  let logErrorRepository: ILogErrorRepository = new LogLogDnaRepository()
+
+  return new LogControllerDecorator(getCampaignListController, logErrorRepository)
 }

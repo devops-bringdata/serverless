@@ -1,77 +1,83 @@
-// import { IEncrypter } from "@/data/protocols/criptography/encrypter"
-// import { EnrichRow } from "@/data/usecases"
-// import { IUploadedDataModel } from "@/domain/models/uploaded-data/uploaded-data"
-// import { IEmailSender } from "@/domain/usecases"
-// import { IUpdateUploadedData } from "@/domain/usecases/update-uploaded-data/update-uploaded-data"
-// import { ok } from "@/presentation/helpers"
-// import { IHttpResponse } from "@/presentation/protocols"
-// const makeEncrypter = (): IEncrypter => {
-//   class EncrypterStub implements IEncrypter {
-//     encrypt(_payload: any): Promise<string> {
-//       return new Promise((resolve) => resolve("any_hash"))
-//     }
-//   }
-//   return new EncrypterStub()
-// }
-// const makeUpdateUploadedData = (): IUpdateUploadedData => {
-//   class UpdateUploadedDataStub implements IUpdateUploadedData {
-//     update(
-//       _rowId: string,
-//       _uploadedDataRow: IUploadedDataModel,
-//       _schemaName: string
-//     ): Promise<IUploadedDataModel> {
-//       return new Promise((resolve) =>
-//         resolve({
-//           uuid: "any_id",
-//           uploadedDataGroup: "any_data_group",
-//           row_number: 0,
-//           row_content: [{ header: "any_header", index: 1, value: "any_value" }],
-//           row_validation: {
-//             emailValidation: {
-//               email: "any_email",
-//               health: 100,
-//               hints: ["any_hint"],
-//               isValid: true,
-//               needsExternalValidation: false,
-//               validationMessage: "valid"
-//             },
-//             phoneValidation: {
-//               phone: "any_phone",
-//               health: 100,
-//               hints: ["any_hint"],
-//               isValid: true,
-//               needsExternalValidation: false,
-//               validationMessage: "valid"
-//             }
-//           },
-//           row_enrichment: {}
-//         })
-//       )
-//     }
-//   }
-//   return new UpdateUploadedDataStub()
-// }
-// const makeEmailSender = (): IEmailSender => {
-//   class EmailSenderStub implements IEmailSender {
-//     send(_message: IEmailSender.Params): Promise<IHttpResponse> {
-//       return new Promise((resolve) => resolve(ok({})))
-//     }
-//   }
-//   return new EmailSenderStub()
-// }
-// const makeSut = (): any => {
-//   const emailSenderStub = makeEmailSender()
-//   const updateUploadedDataStub = makeUpdateUploadedData()
-//   const encrypterStub = makeEncrypter()
-//   const sut = new EnrichRow(
-//     emailSenderStub,
-//     updateUploadedDataStub,
-//     encrypterStub
-//   )
-//   return { sut }
-// }
+import { EnrichRow } from '@/data/usecases'
+import { ServerError } from '@/presentation/errors'
+import { serverError } from '@/presentation/helpers'
+import { mockUploadedDataModel } from '../../domain/mocks/uploaded-data'
+import { mockCampaignModel } from '../../domain/mocks'
+import { EncrypterSpy } from '../../infra/mocks/encrypter'
+import { UpdateUploadedDataSpy } from '../mocks'
+import { EmailSenderSpy } from '../mocks/email-sender'
+import { IUploadedDataModel } from '@/domain/models/uploaded-data/uploaded-data'
+import { ICampaignModel } from '@/domain/models/campaign/campaign'
+
+type SutTypes = {
+  emailSenderSpy: EmailSenderSpy
+  updateUploadedDataSpy: UpdateUploadedDataSpy
+  encrypterSpy: EncrypterSpy
+  sut: EnrichRow
+}
+const makeSut = (): SutTypes => {
+  const emailSenderSpy = new EmailSenderSpy()
+  const updateUploadedDataSpy = new UpdateUploadedDataSpy()
+  const encrypterSpy = new EncrypterSpy()
+  const sut = new EnrichRow(emailSenderSpy, updateUploadedDataSpy, encrypterSpy)
+  return {
+    sut,
+    emailSenderSpy,
+    updateUploadedDataSpy,
+    encrypterSpy
+  }
+}
+const campaignModel = mockCampaignModel()
+const uploadedDataModel = mockUploadedDataModel()
 describe('EnrichRow', () => {
-  test('should return Server Error if no row content was found', () => {
-    expect(1).toBe(1)
+  test('should return Server Error if no row was found', async () => {
+    const { sut } = makeSut()
+    const response = await sut.enrich(null, campaignModel, 'bringdatajest')
+    expect(response).toEqual(serverError(new ServerError('Row Content was not founded')))
+  })
+  test('should return Server Error if no campaign was found', async () => {
+    const { sut } = makeSut()
+    const response = await sut.enrich(uploadedDataModel, null, 'bringdatajest')
+    expect(response).toEqual(serverError(new ServerError('Row Content was not founded')))
+  })
+  test('should return Server Error if no row content was found', async () => {
+    const { sut } = makeSut()
+    const noRowContent = JSON.parse(JSON.stringify(uploadedDataModel))
+    delete noRowContent.row_content
+    const response = await sut.enrich(noRowContent, campaignModel, 'bringdatajest')
+    expect(response).toEqual(serverError(new ServerError('Row Content was not founded')))
+  })
+  test('should return null if email does not match header', async () => {
+    const { sut } = makeSut()
+    const response = await sut.enrich(uploadedDataModel, campaignModel, 'bringdatajest')
+    expect(response).toBe(null)
+  })
+  test('should call update with correct values if variableType = 1', async () => {
+    const { sut, updateUploadedDataSpy } = makeSut()
+    const matchedUploadedData: IUploadedDataModel = JSON.parse(JSON.stringify(uploadedDataModel))
+    const matchedCampaign: ICampaignModel = JSON.parse(JSON.stringify(campaignModel))
+    matchedCampaign.emailVariable = matchedUploadedData.row_content[0].header
+    matchedCampaign.variables[0].name = matchedUploadedData.row_content[0].header
+    matchedCampaign.variables[0].variableType = 1
+
+    await sut.enrich(matchedUploadedData, matchedCampaign, 'bringdatajest')
+    expect(updateUploadedDataSpy.rowId).toBe(matchedUploadedData.uuid)
+    expect(updateUploadedDataSpy.uploadedDataRow).toEqual(matchedUploadedData)
+    expect(updateUploadedDataSpy.schemaName).toEqual('bringdatajest')
+  })
+  test('should call update with correct values if variableType = 1', async () => {
+    const { sut, updateUploadedDataSpy } = makeSut()
+    const matchedUploadedData: IUploadedDataModel = JSON.parse(JSON.stringify(uploadedDataModel))
+    const matchedCampaign: ICampaignModel = JSON.parse(JSON.stringify(campaignModel))
+    matchedUploadedData.row_content.push(mockUploadedDataModel().row_content[0])
+    matchedUploadedData.row_content[1].value = ''
+    matchedCampaign.emailVariable = matchedUploadedData.row_content[0].header
+    matchedCampaign.variables[0].name = matchedUploadedData.row_content[1].header
+    matchedCampaign.variables[0].variableType = 0
+
+    await sut.enrich(matchedUploadedData, matchedCampaign, 'bringdatajest')
+    expect(updateUploadedDataSpy.rowId).toBe(matchedUploadedData.uuid)
+    expect(updateUploadedDataSpy.uploadedDataRow).toEqual(matchedUploadedData)
+    expect(updateUploadedDataSpy.schemaName).toEqual('bringdatajest')
   })
 })

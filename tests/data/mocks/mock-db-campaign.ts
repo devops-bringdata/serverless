@@ -1,8 +1,8 @@
+import { IFindCampaignRepository } from '@/data/protocols/db/campaign/find-campaign-repository'
 import { ICampaignModel } from '@/domain/models/campaign/campaign'
-import { IFindCampaign } from '@/domain/usecases'
 import { mockCampaignModel } from '../../domain/mocks/campaign'
 
-export class DbFindCampaignSpy implements IFindCampaign {
+export class FindCampaignRepositorySpy implements IFindCampaignRepository {
   campaignId: string
   schemaName: string
   result = mockCampaignModel()

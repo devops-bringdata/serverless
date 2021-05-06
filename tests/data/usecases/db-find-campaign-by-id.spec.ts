@@ -1,13 +1,16 @@
 // import { throwError } from "../../domain/mocks"
+import { DbFindCampaign } from '@/data/usecases'
 import * as faker from 'faker'
-import { DbFindCampaignSpy } from '../mocks/mock-db-campaign'
+import { FindCampaignRepositorySpy } from '../mocks/mock-db-campaign'
 
 type SutTypes = {
-  sut: DbFindCampaignSpy
+  sut: DbFindCampaign
+  findCampaignRepositorySpy: FindCampaignRepositorySpy
 }
 const makeSut = (): SutTypes => {
-  const sut = new DbFindCampaignSpy()
-  return { sut }
+  const findCampaignRepositorySpy = new FindCampaignRepositorySpy()
+  const sut = new DbFindCampaign(findCampaignRepositorySpy)
+  return { sut, findCampaignRepositorySpy }
 }
 let campaignId: string
 let schemaName: string
@@ -18,10 +21,10 @@ describe('DbFindCampaignById', () => {
     schemaName = faker.lorem.word(7)
   })
   test('should call findById with correct values', async () => {
-    const { sut } = makeSut()
+    const { sut, findCampaignRepositorySpy } = makeSut()
     await sut.findById('campaign_id', 'any_schema_name')
-    expect(sut.campaignId).toBe('campaign_id')
-    expect(sut.schemaName).toBe('any_schema_name')
+    expect(findCampaignRepositorySpy.campaignId).toBe('campaign_id')
+    expect(findCampaignRepositorySpy.schemaName).toBe('any_schema_name')
   })
   test('Should throw if findById throws', async () => {
     const { sut } = makeSut()

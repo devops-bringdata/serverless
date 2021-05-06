@@ -6,6 +6,7 @@ import { serverError } from '@/presentation/helpers'
 import { ServerError } from '@/presentation/errors'
 import { IUpdateUploadedData } from '@/domain/usecases/update-uploaded-data/update-uploaded-data'
 import { IEncrypter } from '@/data/protocols/criptography/encrypter'
+import { IRowEnrichment } from '@/domain/models/uploaded-data/row-enrichment'
 
 // TODO: adicionar enriquecimento para dados não faltantes
 export class EnrichRow implements IEnrichRow {
@@ -16,13 +17,14 @@ export class EnrichRow implements IEnrichRow {
     private encrypter: IEncrypter
   ) {}
   async enrich(row: IUploadedDataModel, campaign: ICampaignModel, schemaName: string): Promise<any> {
-    const enrichmentRow = []
-
+    if (!row || !campaign) return serverError(new ServerError('Row Content was not founded'))
+    let enrichmentRow: IRowEnrichment[] = []
     const rowContent = row.row_content
-    if (!rowContent) return serverError(new ServerError('Row Content was not founded'))
+    if (!rowContent) return serverError(new ServerError('Row with no content'))
+
     const rowId = row.uuid
     const email = rowContent.find((x) => x.header === campaign.emailVariable)?.value
-    if (!email) return
+    if (!email) return null
     campaign.variables.map((variable) => {
       let whereClause
       if (variable.variableType === 1) whereClause = (x) => x.header === variable.name
@@ -45,35 +47,36 @@ export class EnrichRow implements IEnrichRow {
         }
       }
     })
-    if (enrichmentRow.length !== 0) {
-      row.row_enrichment = enrichmentRow
-      await this.updateUploadedData.update(rowId, row, schemaName)
-
-      const templateData = {
-        title: campaign.emailTemplate.title,
-        text: campaign.emailTemplate.text,
-        organizationName: campaign.emailTemplate.fromName,
-        buttonLabel: campaign.emailTemplate.buttonLabel,
-        logo: campaign.emailTemplate.logo,
-        subject: campaign.emailTemplate.subject,
-        greeting: campaign.emailTemplate.greeting,
-        hashLink: await this.encrypter.encrypt({
-          schemaName,
-          uuid: rowId
-        }),
-        enrichmentLink:
-          process.env.ENVIRONMENT === 'staging'
-            ? 'https://app-staging.bringdata.co/data-update'
-            : 'https://app.bringdata.co/data-update'
-      }
-      const sendResponse = await this.emailSender.send({
-        to: email,
-        from: campaign.emailTemplate.fromMail,
-        fromName: campaign.emailTemplate.fromName,
-        template: 'd-ee8d704e20354f108b6da551deb973fc',
-        dynamic_template_data: templateData
-      })
-      return sendResponse
+    if (!enrichmentRow.length) {
+      return null
     }
+    row.row_enrichment = enrichmentRow
+    await this.updateUploadedData.update(rowId, row, schemaName)
+
+    const templateData = {
+      title: campaign.emailTemplate.title,
+      text: campaign.emailTemplate.text,
+      organizationName: campaign.emailTemplate.fromName,
+      buttonLabel: campaign.emailTemplate.buttonLabel,
+      logo: campaign.emailTemplate.logo,
+      subject: campaign.emailTemplate.subject,
+      greeting: campaign.emailTemplate.greeting,
+      hashLink: await this.encrypter.encrypt({
+        schemaName,
+        uuid: rowId
+      }),
+      enrichmentLink:
+        process.env.ENVIRONMENT === 'staging'
+          ? 'https://app-staging.bringdata.co/data-update'
+          : 'https://app.bringdata.co/data-update'
+    }
+    const sendResponse = await this.emailSender.send({
+      to: email,
+      from: campaign.emailTemplate.fromMail,
+      fromName: campaign.emailTemplate.fromName,
+      template: 'd-ee8d704e20354f108b6da551deb973fc',
+      dynamic_template_data: templateData
+    })
+    return sendResponse
   }
 }

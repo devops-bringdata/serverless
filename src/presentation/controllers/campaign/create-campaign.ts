@@ -7,13 +7,13 @@ import { IStartEnrichment } from '@/domain/usecases/enrichment/start-enrichment'
 import { ICampaignVariablesModel } from '@/domain/models/campaign/campaignVariables'
 import IEmailTemplateModel from '@/domain/models/campaign/emailTemplate'
 
-export class CampaignController implements IController {
+export class CreateCampaignController implements IController {
   constructor(
     private validation: IValidation,
     private createCampaign: ICreateCampaign,
     private startEnrichment: IStartEnrichment
   ) {}
-  async handle(httpRequest: CampaignController.Params, tenant: ITenant): Promise<IHttpResponse> {
+  async handle(httpRequest: CreateCampaignController.Params, tenant: ITenant): Promise<IHttpResponse> {
     try {
       const error = this.validation.validate(httpRequest)
       if (error) return badRequest(error)
@@ -46,7 +46,7 @@ export class CampaignController implements IController {
   }
 }
 
-export namespace CampaignController {
+export namespace CreateCampaignController {
   export type Params = {
     variables: Array<ICampaignVariablesModel>
     emailVariable: string
