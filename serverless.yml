@@ -88,7 +88,7 @@ functions:
     handler: src/main/routes/campaign-routes.handle
     events:
       - http:
-          method: get
+          method: any
           path: campaign-list
   getRowToEnrich:
     handler: src/main/routes/rows-routes.handle
