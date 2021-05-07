@@ -84,6 +84,9 @@ functions:
       - http:
           method: any
           path: campaign
+  getCampaignList:
+    handler: src/main/routes/campaign-routes.handle
+    events:
       - http:
           method: get
           path: campaign-list
