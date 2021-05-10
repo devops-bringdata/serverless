@@ -22,6 +22,8 @@ import { GetCampaignListController } from '@/presentation/controllers/campaign/g
 import { GetCampaignListRepository } from '@/infra/db/typeorm/repositories/campaign-repository/get-campaign-list'
 import { DeleteCampaignController } from '@/presentation/controllers/campaign/delete-campaign'
 import { DeleteCampaignRepository } from '@/infra/db/typeorm/repositories/campaign-repository/delete-campaign'
+import { DuplicateCampaignRepository } from '@/infra/db/typeorm/repositories/campaign-repository/duplicate-campaign'
+import { DuplicateCampaignController } from '@/presentation/controllers/campaign/duplicate-campaign'
 export const makeCreateCampaignController = (): IController => {
   const campaignRepository = new CreateCampaignPostgresRepository()
   const createCampaign = new DbCreateCampaign(campaignRepository)
@@ -54,4 +56,11 @@ export const makeDeleteCampaignController = (): IController => {
   const deleteCampaignController = new DeleteCampaignController(deleteCampaignRepository)
   let logErrorRepository: ILogErrorRepository = new LogLogDnaRepository()
   return new LogControllerDecorator(deleteCampaignController, logErrorRepository)
+}
+
+export const makeDuplicateCampaignController = (): IController => {
+  const duplicateCampaignRepository = new DuplicateCampaignRepository()
+  const duplicateCampaignController = new DuplicateCampaignController(duplicateCampaignRepository)
+  let logErrorRepository: ILogErrorRepository = new LogLogDnaRepository()
+  return new LogControllerDecorator(duplicateCampaignController, logErrorRepository)
 }

@@ -84,25 +84,25 @@ provider:
     ENVIRONMENT: '${opt:stage}'
     API_URL: '${param:API_URL}'
 functions:
-  createCampaign:
-    handler: src/main/routes/campaign-routes.handle
-    events:
-      - http:
-          method: any
-          path: campaign
-  getCampaignList:
-    handler: src/main/routes/campaign-routes.handle
-    events:
-      - http:
-          method: any
-          path: campaign-list
-  deleteCampaign:
+  campaignOperations:
     handler: src/main/routes/campaign-routes.handle
     events:
       - http:
           cors: true
+          method: post
+          path: campaign
+      - http:
+          cors: true
+          method: get
+          path: campaign-list
+      - http:
+          cors: true
           method: delete
           path: delete-campaign
+      - http:
+          cors: true
+          method: get
+          path: duplicate-campaign
   getRowToEnrich:
     handler: src/main/routes/rows-routes.handle
     events:

@@ -6,7 +6,8 @@ import { connect } from '../../helpers/connection'
 
 export class DeleteCampaignRepository implements IDeleteCampaign {
   async delete(campaignId: string, schemaName: string): Promise<IHttpResponse> {
-    const campaignRepository = (await connect(schemaName)).manager.getRepository(Campaign)
+    const connection = await connect(schemaName)
+    const campaignRepository = connection.manager.getRepository(Campaign)
     await campaignRepository.update(campaignId, { deletedAt: new Date() })
     return ok({ body: 'Campaign sucessfully removed' })
   }
