@@ -82,7 +82,7 @@ provider:
     JWT_AUTH_SECRET: '${self:custom.customEnv.JWT_AUTH_SECRET.${opt:stage}}'
     SENDGRID_API_KEY: '${ssm:/staging/external/sendgrid_api_key~true}'
     ENVIRONMENT: '${opt:stage}'
-    API_URL: ${param:API_URL}
+    API_URL: '${param:API_URL}'
 functions:
   createCampaign:
     handler: src/main/routes/campaign-routes.handle
