@@ -2,6 +2,8 @@ import { connect, disconnect } from '@/infra/db/typeorm/helpers/connection'
 import request from 'supertest'
 import { sign } from 'jsonwebtoken'
 const now = new Date()
+const apiUrl = process.env.API_URL || 'http://localhost:3006'
+const environment = process.env.ENVIRONMENT || 'development'
 const mockCampaignData = {
   name: 'valid_name3',
   owner: 'valid_user_id',
@@ -52,30 +54,20 @@ describe('Campaign routes', () => {
   test('Should return an account on success', async () => {
     const data = JSON.parse(JSON.stringify(mockCampaignData))
 
-    await request('http://localhost:3006')
-      .post('/development/campaign')
-      .set('authorization', accessToken)
-      .send(data)
-      .expect(200)
+    await request(apiUrl).post(`/${environment}/campaign`).set('authorization', accessToken).send(data).expect(200)
   })
 
   test('Should return an account on success even missing name', async () => {
     const data = JSON.parse(JSON.stringify(mockCampaignData))
     delete data.name
-    const response = await request('http://localhost:3006')
-      .post('/development/campaign')
-      .set('authorization', accessToken)
-      .send(data)
+    const response = await request(apiUrl).post(`/${environment}/campaign`).set('authorization', accessToken).send(data)
     expect(response.status).toBe(200)
   })
 
   test('Should return an account on success even missing emailTemplate button Label', async () => {
     const data = JSON.parse(JSON.stringify(mockCampaignData))
     delete data.emailTemplate.buttonLabel
-    const response = await request('http://localhost:3006')
-      .post('/development/campaign')
-      .set('authorization', accessToken)
-      .send(data)
+    const response = await request(apiUrl).post(`/${environment}/campaign`).set('authorization', accessToken).send(data)
     expect(response.status).toBe(200)
   })
 })

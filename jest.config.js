@@ -4,6 +4,7 @@ module.exports = {
   coverageDirectory: "coverage",
   coverageProvider: "babel",
   testEnvironment: "node",
+  setupFiles: ["<rootDir>/tests/setEnvVars.js"],
   transform: {
     ".+\\.ts$": "ts-jest"
   },

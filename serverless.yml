@@ -2,6 +2,7 @@ service: bringdata-serverless
 frameworkVersion: '2'
 org: bringdata
 app: bringdata-serverless
+stage: development
 custom:
   webpack:
     webpackConfig: './webpack.config.js'
@@ -54,6 +55,10 @@ custom:
       development: 4aa04f57a84d4d1655b7ba575d7f7794
       staging: '${ssm:/staging/external/jwt_auth_secret~true}'
       production: '${ssm:/production/external/jwt_auth_secret~true}'
+    API_URL:
+      development: http://localhost:3006
+      staging: https://cf5hlu257j.execute-api.sa-east-1.amazonaws.com
+      production: https://2aghe09ei5.execute-api.sa-east-1.amazonaws.com
 plugins:
   - serverless-webpack
   - serverless-offline
@@ -77,6 +82,7 @@ provider:
     JWT_AUTH_SECRET: '${self:custom.customEnv.JWT_AUTH_SECRET.${opt:stage}}'
     SENDGRID_API_KEY: '${ssm:/staging/external/sendgrid_api_key~true}'
     ENVIRONMENT: '${opt:stage}'
+    API_URL: ${param:API_URL}
 functions:
   createCampaign:
     handler: src/main/routes/campaign-routes.handle

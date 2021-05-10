@@ -1,7 +1,6 @@
 import { mockCampaignModel } from '../../../tests/domain/mocks'
 import { connect, disconnect } from '../../../src/infra/db/typeorm/helpers/connection'
 import { CreateCampaignPostgresRepository } from '../../../src/infra/db/typeorm/repositories/campaign-repository/create-campaign'
-const now = new Date()
 const mockCampaignData = mockCampaignModel()
 describe('Campaign Postgres Repository', () => {
   beforeAll(async () => {
