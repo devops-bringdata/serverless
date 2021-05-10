@@ -1,30 +1,21 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add -D @types/json-2-csv
+  /home/samuelfalci/.nvm/versions/node/v12.21.0/bin/node /usr/bin/yarn
 
 PATH: 
-  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\samue\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\QuickTime\QTSystem;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin;C:\Program Files\Amazon\AWSCLIV2;C:\Users\samue\AppData\Local\Microsoft\WindowsApps;C:\Users\samue\AppData\Roaming\npm;C:\Users\samue\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\samue\AppData\Local\GitHubDesktop\bin;C:\Users\samue\AppData\Local\Yarn\bin
+  /home/samuelfalci/.nvm/versions/node/v12.21.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
-  1.22.5
+  1.22.10
 
 Node version: 
-  14.15.0
+  12.21.0
 
 Platform: 
-  win32 x64
+  linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fjson-2-csv: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66097:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140749:22)
-      at Request.emit (events.js:315:20)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141721:10)
-      at Request.emit (events.js:315:20)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141643:12)
-      at Object.onceWrapper (events.js:421:28)
-      at IncomingMessage.emit (events.js:327:22)
-      at endReadableNT (_stream_readable.js:1327:12)
-      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+  Error: getaddrinfo EAI_AGAIN registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:66:26)
 
 npm manifest: 
   {
@@ -33,12 +24,13 @@ npm manifest:
     "description": "Bringdata Enrichment system",
     "main": "handler.js",
     "scripts": {
-      "test": "jest  --passWithNoTests --runInBand --no-cache",
+      "tests": "jest  --passWithNoTests --runInBand --no-cache --detectOpenHandles",
       "test:verbose": "jest --no-cache --passWithNoTests",
-      "test:unit": "npm test -- --watchAll -c jest-unit-config.js",
-      "test:integration": "npm test -- --watchAll -c jest-integration-config.js",
+      "test:unit": "npm tests -- --watchAll -c jest-unit-config.js",
+      "test:integration": "npm tests -- --watchAll -c jest-integration-config.js",
       "test:coverage": "jest --no-cache --collect-coverage",
       "start:dev": "sls offline --stage development",
+      "start:prod": "sls offline --stage production",
       "start:staging": "sls offline --stage staging",
       "deploy:staging": "sls deploy --stage staging",
       "deploy:prod": "sls deploy --stage production"
