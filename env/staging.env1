@@ -1,7 +1,0 @@
-JWT_AUTH_SECRET="4aa04f57a84d4d1655b7ba575d7f7794"
-TEST_DATABASE="bringdata-jest"
-DB_HOST="rds-cluster-staging.bringdata.co"
-DB_PORT=15435
-DB_USERNAME="bringdata.services"
-DB_PASSWORD="w&wG8iizGbCB-"
-DB_NAME="core"
