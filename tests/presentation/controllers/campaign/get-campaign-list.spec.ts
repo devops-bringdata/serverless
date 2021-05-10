@@ -1,5 +1,5 @@
 import { GetCampaignListController } from '@/presentation/controllers/campaign/get-campaign-list'
-import { GetCampaignListSpy } from '../../mocks/campaign-list'
+import { GetCampaignListSpy } from '../../mocks/campaign'
 import { mockTenant } from '../../mocks/mock-tenant'
 
 type SutTypes = {

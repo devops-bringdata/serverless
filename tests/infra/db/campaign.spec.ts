@@ -1,32 +1,8 @@
+import { mockCampaignModel } from '../../../tests/domain/mocks'
 import { connect, disconnect } from '../../../src/infra/db/typeorm/helpers/connection'
 import { CreateCampaignPostgresRepository } from '../../../src/infra/db/typeorm/repositories/campaign-repository/create-campaign'
 const now = new Date()
-const mockCampaignData = {
-  name: 'valid_name',
-  owner: 'valid_user_id',
-  emailVariable: 'valid_email_variable',
-  variables: [
-    {
-      name: 'valid_variable_name',
-      question: 'valid_question',
-      history: false,
-      variableType: 0,
-      lgpdJustification: 'any_lgpd_justification'
-    }
-  ],
-  collectWays: ['valid_collect_ways'],
-  emailTemplate: {
-    buttonLabel: 'some_string',
-    fromMail: 'some_string',
-    fromName: 'some_string',
-    greeting: 'some_string',
-    logo: 'some_string',
-    subject: 'some_string',
-    text: 'some_string',
-    title: 'some_string'
-  },
-  resendDate: now
-}
+const mockCampaignData = mockCampaignModel()
 describe('Campaign Postgres Repository', () => {
   beforeAll(async () => {
     disconnect()
@@ -56,37 +32,14 @@ describe('Campaign Postgres Repository', () => {
   test('Should return an account on success', async () => {
     const { sut } = makeSut()
     const campaign = await sut.create(mockCampaignData, 'bringdatajest')
-    expect(campaign).toBeTruthy()
-    expect(campaign.uuid).toBeTruthy()
-    expect(campaign.name).toBe('valid_name')
-    expect(campaign.owner).toBe('valid_user_id')
-    expect(campaign.variables).toEqual([
-      {
-        name: 'valid_variable_name',
-        question: 'valid_question',
-        history: false,
-        variableType: 0,
-        lgpdJustification: 'any_lgpd_justification'
-      }
-    ])
-    expect(campaign.collectWays).toEqual(['valid_collect_ways'])
-    expect(campaign.emailTemplate).toEqual({
-      buttonLabel: 'some_string',
-      fromMail: 'some_string',
-      fromName: 'some_string',
-      greeting: 'some_string',
-      logo: 'some_string',
-      subject: 'some_string',
-      text: 'some_string',
-      title: 'some_string'
-    })
-    expect(campaign.resendDate).toEqual(now)
-  })
-  test('should throw if connect throws', async () => {
-    const { sut } = makeSut()
-    jest.spyOn(sut, 'create').mockReturnValueOnce(new Promise((_resolve, reject) => reject(new Error())))
-    const promise = sut.create(mockCampaignData, 'bringdatajest')
-    await expect(promise).rejects.toThrow()
+    // expect(campaign).toEqual(mockCampaignData)
+    expect(campaign.uuid).toBe(mockCampaignData.uuid)
+    expect(campaign.name).toBe(mockCampaignData.name)
+    expect(campaign.owner).toBe(mockCampaignData.owner)
+    expect(campaign.variables).toEqual(mockCampaignData.variables)
+    expect(campaign.collectWays).toEqual(mockCampaignData.collectWays)
+    expect(campaign.emailTemplate).toEqual(mockCampaignData.emailTemplate)
+    expect(campaign.resendDate).toBe(mockCampaignData.resendDate)
   })
   test('should throw if connect throws', async () => {
     const { sut } = makeSut()

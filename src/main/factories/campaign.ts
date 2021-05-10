@@ -20,6 +20,8 @@ import { UpdateUploadedDataRepository } from '@/infra/db/typeorm/repositories/up
 import { JwtAdapter } from '@/infra/criptography/jwt-adapter'
 import { GetCampaignListController } from '@/presentation/controllers/campaign/get-campaign-list'
 import { GetCampaignListRepository } from '@/infra/db/typeorm/repositories/campaign-repository/get-campaign-list'
+import { DeleteCampaignController } from '@/presentation/controllers/campaign/delete-campaign'
+import { DeleteCampaignRepository } from '@/infra/db/typeorm/repositories/campaign-repository/delete-campaign'
 export const makeCreateCampaignController = (): IController => {
   const campaignRepository = new CreateCampaignPostgresRepository()
   const createCampaign = new DbCreateCampaign(campaignRepository)
@@ -45,4 +47,11 @@ export const makeCreateGetCampaignListController = (): IController => {
   let logErrorRepository: ILogErrorRepository = new LogLogDnaRepository()
 
   return new LogControllerDecorator(getCampaignListController, logErrorRepository)
+}
+
+export const makeDeleteCampaignController = (): IController => {
+  const deleteCampaignRepository = new DeleteCampaignRepository()
+  const deleteCampaignController = new DeleteCampaignController(deleteCampaignRepository)
+  let logErrorRepository: ILogErrorRepository = new LogLogDnaRepository()
+  return new LogControllerDecorator(deleteCampaignController, logErrorRepository)
 }

@@ -90,6 +90,13 @@ functions:
       - http:
           method: any
           path: campaign-list
+  deleteCampaign:
+    handler: src/main/routes/campaign-routes.handle
+    events:
+      - http:
+          cors: true
+          method: delete
+          path: delete-campaign
   getRowToEnrich:
     handler: src/main/routes/rows-routes.handle
     events:

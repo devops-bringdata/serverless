@@ -45,9 +45,12 @@ const makeSut = (): SutTypes => {
   }
 }
 let rowArray = []
-for (let i = 0; i < random.number(5); i++) {
-  rowArray.push(mockEnrichmentRow())
-}
+
+beforeEach(() => {
+  for (let i = 0; i < random.number(5); i++) {
+    rowArray.push(mockEnrichmentRow())
+  }
+})
 const mockRequest = {
   row: rowArray,
   token: random.alphaNumeric()
@@ -162,7 +165,8 @@ describe('UpdateEnrichmentRowController', () => {
     )
     const enrichmentRow = mockUploadedDataModel()
     enrichmentRow.row_enrichment = JSON.parse(JSON.stringify(rowArray))
-    if (!enrichmentRow.row_enrichment[0].result) {
+    if (!enrichmentRow?.row_enrichment[0]?.result) {
+      if (enrichmentRow.row_enrichment[0]) enrichmentRow.row_enrichment.push(mockEnrichmentRow())
       enrichmentRow.row_enrichment[0].result = ''
     }
     enrichmentRow.row_enrichment[0].result = ''
