@@ -94,6 +94,10 @@ functions:
       - http:
           cors: true
           method: get
+          path: get-campaign
+      - http:
+          cors: true
+          method: get
           path: campaign-list
       - http:
           cors: true
@@ -103,6 +107,10 @@ functions:
           cors: true
           method: get
           path: duplicate-campaign
+      - http:
+          cors: true
+          method: patch
+          path: update-campaign
   getRowToEnrich:
     handler: src/main/routes/rows-routes.handle
     events:

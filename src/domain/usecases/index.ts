@@ -1,5 +1,6 @@
 export * from './campaign/create-campaign'
 export * from './campaign/find-campaign'
+export * from './campaign/get-campaign'
 export * from './enrichment/enrich-row'
 export * from './enrichment/find-rows-to-enrich'
 export * from './enrichment/start-enrichment'

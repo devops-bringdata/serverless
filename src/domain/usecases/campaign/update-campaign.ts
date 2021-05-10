@@ -2,12 +2,13 @@ import { ICampaignVariablesModel } from '../../models/campaign/campaignVariables
 import IEmailTemplateModel from '../../models/campaign/emailTemplate'
 import { ICampaignModel } from '../../models/campaign/campaign'
 
-export interface ICreateCampaign {
-  create: (campaign: ICreateCampaign.Params, tenant: string) => Promise<ICampaignModel>
+export interface IUpdateCampaign {
+  update: (campaign: IUpdateCampaign.Params, schemaName: string) => Promise<ICampaignModel>
 }
 
-export namespace ICreateCampaign {
+export namespace IUpdateCampaign {
   export type Params = {
+    uuid: string
     name: string
     owner: string
     emailVariable: string

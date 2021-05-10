@@ -24,6 +24,9 @@ import { DeleteCampaignController } from '@/presentation/controllers/campaign/de
 import { DeleteCampaignRepository } from '@/infra/db/typeorm/repositories/campaign-repository/delete-campaign'
 import { DuplicateCampaignRepository } from '@/infra/db/typeorm/repositories/campaign-repository/duplicate-campaign'
 import { DuplicateCampaignController } from '@/presentation/controllers/campaign/duplicate-campaign'
+import { GetCampaignController, UpdateCampaignController } from '@/presentation/controllers'
+import { GetCampaignRepository } from '@/infra/db/typeorm/repositories/campaign-repository/get-campaign'
+import { UpdateCampaignRepository } from '@/infra/db/typeorm/repositories/campaign-repository/update-campaign'
 export const makeCreateCampaignController = (): IController => {
   const campaignRepository = new CreateCampaignPostgresRepository()
   const createCampaign = new DbCreateCampaign(campaignRepository)
@@ -42,7 +45,12 @@ export const makeCreateCampaignController = (): IController => {
 
   return new LogControllerDecorator(campaignController, logErrorRepository)
 }
-
+export const makeGetCampaignController = (): IController => {
+  const getCampaignRepository = new GetCampaignRepository()
+  const getCampaignController = new GetCampaignController(getCampaignRepository)
+  let logErrorRepository: ILogErrorRepository = new LogLogDnaRepository()
+  return new LogControllerDecorator(getCampaignController, logErrorRepository)
+}
 export const makeCreateGetCampaignListController = (): IController => {
   const getCampaignListRepository = new GetCampaignListRepository()
   const getCampaignListController = new GetCampaignListController(getCampaignListRepository)
@@ -63,4 +71,11 @@ export const makeDuplicateCampaignController = (): IController => {
   const duplicateCampaignController = new DuplicateCampaignController(duplicateCampaignRepository)
   let logErrorRepository: ILogErrorRepository = new LogLogDnaRepository()
   return new LogControllerDecorator(duplicateCampaignController, logErrorRepository)
+}
+
+export const makeUpdateCampaignController = (): IController => {
+  const updateCampaignRepository = new UpdateCampaignRepository()
+  const updateCampaignController = new UpdateCampaignController(updateCampaignRepository)
+  let logErrorRepository: ILogErrorRepository = new LogLogDnaRepository()
+  return new LogControllerDecorator(updateCampaignController, logErrorRepository)
 }
