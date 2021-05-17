@@ -67,6 +67,6 @@
     "webpack": "^5.4.0",
     "webpack-node-externals": "^2.5.2"
   },
-  "author": "samuelhfalci@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "author": "samuelhfalci@gmail.com"
 }
