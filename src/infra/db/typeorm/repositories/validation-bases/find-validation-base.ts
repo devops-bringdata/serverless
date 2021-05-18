@@ -1,6 +1,6 @@
 import { IValidationBaseModel } from '@/domain/models/validation-bases/validation-base'
 import { IFindValidationBase } from '@/domain/usecases/validation-bases/find-validation-base'
-import { ValidationBase } from '../../entities/validation-base'
+import { ValidationBase } from '../../entities/ValidationBase'
 import { connect } from '../../helpers/connection'
 
 export class FindValidationBaseRepository implements IFindValidationBase {

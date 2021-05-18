@@ -15,6 +15,7 @@ export async function connect(dbName: string): Promise<Connection> {
   }).catch((error) => {
     if (error.name === 'AlreadyHasActiveConnectionError') {
       const existentConn = getConnectionManager().get('default')
+      console.log(existentConn)
       return existentConn
     }
   })

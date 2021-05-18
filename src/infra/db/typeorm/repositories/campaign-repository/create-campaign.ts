@@ -3,7 +3,7 @@ import { ICreateCampaignRepository } from '@/data/protocols/db/campaign/create-c
 import { ICampaignModel } from '@/domain/models/campaign/campaign'
 import { ICreateCampaign } from '@/domain/usecases/campaign/create-campaign'
 
-import { Campaign } from '../../entities/campaign'
+import { Campaign } from '../../entities/Campaign'
 import { connect } from '../../helpers/connection'
 
 export class CreateCampaignPostgresRepository implements ICreateCampaignRepository {

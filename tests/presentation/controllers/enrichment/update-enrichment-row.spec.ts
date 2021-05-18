@@ -2,13 +2,13 @@
 import { UpdateEnrichmentRowController } from '@/presentation/controllers/enrichment/update-enrichment-row'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest } from '@/presentation/helpers'
-import { DecrypterSpy } from '../../data/mocks/mock-cryptography'
+import { DecrypterSpy } from '../../../data/mocks/mock-cryptography'
 import { random } from 'faker'
-import { GetEnrichmentRowSpy, UpdateUploadedDataSpy } from '../../data/mocks/mock-enrichment'
-import { mockEnrichmentRow } from '../../domain/mocks/enrichment'
-import { mockUploadedDataModel } from '../../domain/mocks/uploaded-data'
-import { ChargeCreditsSpy } from '../../data/mocks/credits'
-import { FindUploadedBaseSpy, UpdateUploadedBaseSpy } from '../mocks/uploaded-base'
+import { GetEnrichmentRowSpy, UpdateUploadedDataSpy } from '../../../data/mocks/mock-enrichment'
+import { mockEnrichmentRow } from '../../../domain/mocks/enrichment'
+import { mockUploadedDataModel } from '../../../domain/mocks/uploaded-data'
+import { ChargeCreditsSpy } from '../../../data/mocks/credits'
+import { FindUploadedBaseSpy, UpdateUploadedBaseSpy } from '../../mocks/uploaded-base'
 
 type SutTypes = {
   sut: UpdateEnrichmentRowController

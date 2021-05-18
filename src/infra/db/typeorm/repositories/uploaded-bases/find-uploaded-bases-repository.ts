@@ -1,6 +1,6 @@
 import { IUploadedBaseModel } from '@/domain/models/uploaded-bases/uploaded-bases'
 import { IFindUploadedBase } from '@/domain/usecases/uploaded-bases/find-uploaded-base'
-import { UploadedBase } from '../../entities/uploaded-bases'
+import { UploadedBase } from '../../entities/UploadedBase'
 import { connect, disconnect } from '../../helpers/connection'
 
 export class FindUploadedBaseRepository implements IFindUploadedBase {

@@ -1,6 +1,6 @@
 import { IUploadedDataModel } from '@/domain/models/uploaded-data/uploaded-data'
 import { IUpdateUploadedData } from '@/domain/usecases/update-uploaded-data/update-uploaded-data'
-import { UploadedData } from '@/infra/db/typeorm/entities/uploaded-data'
+import { UploadedData } from '@/infra/db/typeorm/entities/UploadedData'
 import { connect } from '../../helpers/connection'
 
 export class UpdateUploadedDataRepository implements IUpdateUploadedData {

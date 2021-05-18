@@ -1,6 +1,6 @@
 import { IGetEnrichmentRowRepository } from '@/data/protocols/db/enrichment/get-enrichment-row-repository'
 import { IUploadedDataModel } from '@/domain/models/uploaded-data/uploaded-data'
-import { UploadedData } from '../../entities/uploaded-data'
+import { UploadedData } from '../../entities/UploadedData'
 import { connect, disconnect } from '../../helpers/connection'
 
 export class GetEnrichmentRowRepository implements IGetEnrichmentRowRepository {

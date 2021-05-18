@@ -2,7 +2,7 @@ import { MissingParamError } from '@/presentation/errors'
 import { badRequest } from '@/presentation/helpers'
 import { IController } from '@/presentation/protocols'
 import { GetEnrichmentRowController } from '@/presentation/controllers/enrichment/get-enrichment-row'
-import { GetEnrichmentRowSpy, DecrypterSpy, FindCampaignRepositorySpy } from '../../data/mocks'
+import { GetEnrichmentRowSpy, DecrypterSpy, FindCampaignRepositorySpy } from '../../../data/mocks'
 import { random } from 'faker'
 
 type SutTypes = {

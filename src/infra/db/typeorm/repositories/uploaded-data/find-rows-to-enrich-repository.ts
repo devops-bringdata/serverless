@@ -1,6 +1,6 @@
 import { IFindUploadedDataByGroupIdRepository } from '@/data/protocols/db/enrichment/find-rows-to-enrich'
 import { IUploadedDataModel } from '@/domain/models/uploaded-data/uploaded-data'
-import { UploadedData } from '../../entities/uploaded-data'
+import { UploadedData } from '../../entities/UploadedData'
 import { connect, disconnect } from '../../helpers/connection'
 
 export class FindUploadedDataByGroupIdRepository implements IFindUploadedDataByGroupIdRepository {

@@ -1,6 +1,6 @@
 import { IValidationBaseModel } from '@/domain/models/validation-bases/validation-base'
 import { IUpdateValidationBase } from '@/domain/usecases/validation-bases/update-validation-base'
-import { ValidationBase } from '../../entities/validation-base'
+import { ValidationBase } from '../../entities/ValidationBase'
 import { connect } from '../../helpers/connection'
 
 export class UpdateValidationBaseRepository implements IUpdateValidationBase {

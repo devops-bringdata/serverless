@@ -1,6 +1,6 @@
 import { IGetUploadedBasesRepository } from '@/data/protocols/db/uploaded-bases/get-uploaded-bases-repository'
 import { IUploadedBaseModel } from '@/domain/models/uploaded-bases/uploaded-bases'
-import { UploadedBase } from '../../entities/uploaded-bases'
+import { UploadedBase } from '../../entities/UploadedBase'
 import { connect, disconnect } from '../../helpers/connection'
 
 export class GetUploadedBasesRepository implements IGetUploadedBasesRepository {

@@ -59,11 +59,6 @@ custom:
       development: http://localhost:3006
       staging: https://cf5hlu257j.execute-api.sa-east-1.amazonaws.com
       production: https://2aghe09ei5.execute-api.sa-east-1.amazonaws.com
-  customDomain:
-    domainName: api-v1.bringdata.co
-    pasePath: ''
-    stage: ${self:provider.stage}
-    createRoute53Record: true
 plugins:
   - serverless-webpack
   - serverless-offline
@@ -88,7 +83,6 @@ provider:
     JWT_AUTH_SECRET: '${self:custom.customEnv.JWT_AUTH_SECRET.${opt:stage}}'
     SENDGRID_API_KEY: '${ssm:/staging/external/sendgrid_api_key~true}'
     ENVIRONMENT: '${opt:stage}'
-    API_URL: '${param:API_URL}'
 functions:
   campaignOperations:
     handler: src/main/routes/campaign-routes.handle
@@ -123,12 +117,16 @@ functions:
       - http:
           method: any
           path: enrichment-row
-  getEnrichmentRows:
+  enrichmentOperations:
     handler: src/main/routes/enrichment-routes.handle
     events:
       - http:
           method: any
           path: enrichment-rows
+      - http:
+          cors: true
+          method: post
+          path: start-enrichment
   uploadedBases:
     handler: src/main/routes/uploaded-bases-routes.handle
     events:

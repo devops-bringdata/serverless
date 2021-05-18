@@ -1,7 +1,7 @@
 import { IChargeCreditsModel } from '@/domain/models/charge/charge-credits'
 import { IChargeCredits } from '@/domain/usecases/charge/charge-credits'
 import { v4 } from 'uuid'
-import { Credit } from '../../entities/credits'
+import { Credit } from '../../entities/Credits'
 import { connect } from '../../helpers/connection'
 
 export class ChargeCreditsRepository implements IChargeCredits {

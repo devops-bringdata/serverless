@@ -1,7 +1,7 @@
 import { IFindCampaignRepository } from '@/data/protocols/db/campaign/find-campaign-repository'
 import { ICampaignModel } from '@/domain/models/campaign/campaign'
 
-import { Campaign } from '../../entities/campaign'
+import { Campaign } from '../../entities/Campaign'
 import { connect, disconnect } from '../../helpers/connection'
 
 export class FindCampaignPostgresRepository implements IFindCampaignRepository {
