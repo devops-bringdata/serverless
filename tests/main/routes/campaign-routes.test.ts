@@ -1,6 +1,7 @@
 import { connect, disconnect } from '@/infra/db/typeorm/helpers/connection'
 import request from 'supertest'
 import { sign } from 'jsonwebtoken'
+import { Database } from '@/infra/db/typeorm/helpers/Database'
 const now = new Date()
 const apiUrl = process.env.API_URL || 'http://localhost:3006'
 const environment = process.env.ENVIRONMENT || 'development'
@@ -33,7 +34,8 @@ let accessToken
 describe('Campaign routes', () => {
   beforeAll(async () => {
     disconnect()
-    await connect('bringdatajest')
+    const database = new Database()
+    await database.getConnection('bringdatajest')
     accessToken = sign({ schemaName: 'bringdatajest', id: 'any_id' }, '4aa04f57a84d4d1655b7ba575d7f7794')
   })
 

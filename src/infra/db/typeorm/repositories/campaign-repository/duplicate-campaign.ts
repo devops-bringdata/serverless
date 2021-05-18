@@ -3,11 +3,12 @@ import { ok } from '@/presentation/helpers'
 import { IHttpResponse } from '@/presentation/protocols'
 import { v4 } from 'uuid'
 import { Campaign } from '../../entities'
-import { connect } from '../../helpers/connection'
+import { Database } from '../../helpers/Database'
 
 export class DuplicateCampaignRepository implements IDuplicateCampaign {
   async duplicate(campaignId: string, schemaName: string): Promise<IHttpResponse> {
-    const connection = await connect(schemaName)
+    const database = new Database()
+    const connection = await database.getConnection(schemaName)
     const campaignRepository = connection.manager.getRepository(Campaign)
     let campaign = await campaignRepository.findOne(campaignId)
     let copy = JSON.parse(JSON.stringify(campaign))

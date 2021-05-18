@@ -2,11 +2,13 @@ import { IChargeCreditsModel } from '@/domain/models/charge/charge-credits'
 import { IChargeCredits } from '@/domain/usecases/charge/charge-credits'
 import { v4 } from 'uuid'
 import { Credit } from '../../entities/Credits'
-import { connect } from '../../helpers/connection'
+import { Database } from '../../helpers/Database'
 
 export class ChargeCreditsRepository implements IChargeCredits {
   async charge(params: IChargeCredits.Params, schemaName: string): Promise<IChargeCreditsModel> {
-    const creditRepository = (await connect(schemaName)).manager.getRepository(Credit)
+    const database = new Database()
+    const connection = await database.getConnection(schemaName)
+    const creditRepository = connection.manager.getRepository(Credit)
     const lastCredit = await creditRepository
       .find({
         order: { id: 'DESC' }

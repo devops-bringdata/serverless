@@ -1,11 +1,13 @@
 import { IValidationBaseModel } from '@/domain/models/validation-bases/validation-base'
 import { IUpdateValidationBase } from '@/domain/usecases/validation-bases/update-validation-base'
 import { ValidationBase } from '../../entities/ValidationBase'
-import { connect } from '../../helpers/connection'
+import { Database } from '../../helpers/Database'
 
 export class UpdateValidationBaseRepository implements IUpdateValidationBase {
   async update(schemaName: string, params: IValidationBaseModel): Promise<IValidationBaseModel> {
-    const validationBaseRepository = (await connect(schemaName)).manager.getRepository(ValidationBase)
+    const database = new Database()
+    const connection = await database.getConnection(schemaName)
+    const validationBaseRepository = connection.manager.getRepository(ValidationBase)
     const validationBaseId = params.uuid
     delete params.uuid
     const result: IValidationBaseModel = await validationBaseRepository

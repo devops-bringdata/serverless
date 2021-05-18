@@ -2,13 +2,14 @@ import { IFindCampaignRepository } from '@/data/protocols/db/campaign/find-campa
 import { ICampaignModel } from '@/domain/models/campaign/campaign'
 
 import { Campaign } from '../../entities/Campaign'
-import { connect, disconnect } from '../../helpers/connection'
+import { Database } from '../../helpers/Database'
 
 export class FindCampaignPostgresRepository implements IFindCampaignRepository {
   async findById(campaignId: string, schemaName: string): Promise<ICampaignModel> {
-    const campaignRepository = (await connect(schemaName)).manager.getRepository(Campaign)
+    const database = new Database()
+    const connection = await database.getConnection(schemaName)
+    const campaignRepository = connection.manager.getRepository(Campaign)
     const result: ICampaignModel = await campaignRepository.findOne(campaignId)
-    await disconnect()
     return result
   }
 }

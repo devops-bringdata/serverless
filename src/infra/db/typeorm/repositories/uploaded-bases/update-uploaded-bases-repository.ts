@@ -1,7 +1,7 @@
 import { IUploadedBaseModel, UploadedBaseModelSave } from '@/domain/models/uploaded-bases/uploaded-bases'
 import { IUpdateUploadedBase } from '@/domain/usecases/uploaded-bases/update-uploaded-base'
 import { UploadedBase } from '../../entities'
-import { connect } from '../../helpers/connection'
+import { Database } from '../../helpers/Database'
 
 export class UpdateUploadedBaseRepository implements IUpdateUploadedBase {
   async update(
@@ -9,7 +9,9 @@ export class UpdateUploadedBaseRepository implements IUpdateUploadedBase {
     uploadedBaseId: string,
     uploadedBase: UploadedBaseModelSave
   ): Promise<IUploadedBaseModel> {
-    const uploadedBaseRepository = (await connect(schemaName)).manager.getRepository(UploadedBase)
+    const database = new Database()
+    const connection = await database.getConnection(schemaName)
+    const uploadedBaseRepository = connection.manager.getRepository(UploadedBase)
     const result: IUploadedBaseModel = await uploadedBaseRepository
       .update(uploadedBaseId, uploadedBase)
       .then((response) => response.raw[0])

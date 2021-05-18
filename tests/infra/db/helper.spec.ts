@@ -1,5 +1,6 @@
 import { Campaign } from '@/infra/db/typeorm/entities'
-import { connect, disconnect } from '@/infra/db/typeorm/helpers/connection'
+import { disconnect } from '@/infra/db/typeorm/helpers/connection'
+import { Database } from '@/infra/db/typeorm/helpers/Database'
 import { Connection } from 'typeorm'
 
 describe('Typeorm Helper', () => {
@@ -7,7 +8,8 @@ describe('Typeorm Helper', () => {
     disconnect()
   })
   test('should reconnect if database is down', async () => {
-    let connection: Connection = await connect('bringdatajest')
+    const database = new Database()
+    let connection: Connection = await database.getConnection('bringdatajest')
     let repository = connection?.manager.getRepository(Campaign)
     expect(repository).toBeTruthy()
   })
