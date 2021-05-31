@@ -12,6 +12,7 @@ export class GetApiKeyRepository implements IGetApiKey {
       relations: ['organization', 'user'],
       where: { key: apiKey }
     })
+
     return result
   }
 }

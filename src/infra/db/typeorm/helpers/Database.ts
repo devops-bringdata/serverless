@@ -12,7 +12,7 @@ export class Database {
   }
 
   public async getConnection(dbName: string): Promise<Connection> {
-    const CONNECTION_NAME = `default`
+    const CONNECTION_NAME = dbName === 'core' ? 'core' : `default`
 
     let connection: Connection
 
@@ -27,6 +27,7 @@ export class Database {
       console.log(`Database.getConnection()-creating connection ...`)
 
       const connectionOptions: ConnectionOptions = {
+        name: dbName === 'core' ? 'core' : 'defaul',
         type: 'postgres',
         host: process.env.DB_HOST || 'localhost',
         port: parseInt(process.env.DB_PORT) || 5432,

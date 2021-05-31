@@ -6,7 +6,6 @@ export class GetTenantByApiKey implements IGetTenantByApiKey {
   constructor(private readonly getApiKeyRepository: GetApiKeyRepository) {}
   async getTenant(apiKey: string): Promise<ITenant> {
     const tenant = await this.getApiKeyRepository.get(apiKey)
-    console.log(tenant)
     if (tenant) {
       return {
         schemaName: tenant.organization.schemaName,
