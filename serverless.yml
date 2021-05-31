@@ -1,8 +1,9 @@
 service: bringdata-serverless
+variablesResolutionMode: 20210326
+configValidationMode: error
 frameworkVersion: '2'
 org: bringdata
 app: bringdata-serverless
-stage: development
 custom:
   webpack:
     webpackConfig: './webpack.config.js'
@@ -33,28 +34,28 @@ custom:
   customEnv:
     DB_HOST:
       development: localhost
-      staging: '${ssm:/staging/database/db_host~true}'
-      production: '${ssm:/production/database/db_host~true}'
+      staging: '${ssm:/staging/database/db_host}'
+      production: '${ssm:/production/database/db_host}'
     DB_NAME:
       development: core
-      staging: '${ssm:/staging/database/db_name~true}'
-      production: '${ssm:/production/database/db_name~true}'
+      staging: '${ssm:/staging/database/db_name}'
+      production: '${ssm:/production/database/db_name}'
     DB_PASSWORD:
       development: '123456'
-      staging: '${ssm:/staging/database/db_password~true}'
-      production: '${ssm:/production/database/db_password~true}'
+      staging: '${ssm:/staging/database/db_password}'
+      production: '${ssm:/production/database/db_password}'
     DB_PORT:
       development: '5432'
-      staging: '${ssm:/staging/database/db_port~true}'
-      production: '${ssm:/production/database/db_port~true}'
+      staging: '${ssm:/staging/database/db_port}'
+      production: '${ssm:/production/database/db_port}'
     DB_USERNAME:
       development: postgres
-      staging: '${ssm:/staging/database/db_username~true}'
-      production: '${ssm:/production/database/db_username~true}'
+      staging: '${ssm:/staging/database/db_username}'
+      production: '${ssm:/production/database/db_username}'
     JWT_AUTH_SECRET:
       development: 4aa04f57a84d4d1655b7ba575d7f7794
-      staging: '${ssm:/staging/external/jwt_auth_secret~true}'
-      production: '${ssm:/production/external/jwt_auth_secret~true}'
+      staging: '${ssm:/staging/external/jwt_auth_secret}'
+      production: '${ssm:/production/external/jwt_auth_secret}'
     API_URL:
       development: http://localhost:3006
       staging: https://cf5hlu257j.execute-api.sa-east-1.amazonaws.com
@@ -64,6 +65,7 @@ plugins:
   - serverless-offline
 provider:
   name: aws
+  lambdaHashingVersion: 20201221
   runtime: nodejs12.x
   timeout: 15
   apiGateway:
@@ -80,7 +82,7 @@ provider:
     DB_USERNAME: '${self:custom.customEnv.DB_USERNAME.${opt:stage}}'
     TEST_DATABASE: bringdatajest
     JWT_AUTH_SECRET: '${self:custom.customEnv.JWT_AUTH_SECRET.${opt:stage}}'
-    SENDGRID_API_KEY: '${ssm:/staging/external/sendgrid_api_key~true}'
+    SENDGRID_API_KEY: '${ssm:/staging/external/sendgrid_api_key}'
     ENVIRONMENT: '${opt:stage}'
 functions:
   campaignOperations:

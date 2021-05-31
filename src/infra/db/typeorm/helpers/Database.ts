@@ -1,5 +1,5 @@
 import { Connection, ConnectionManager, ConnectionOptions, createConnection, getConnectionManager } from 'typeorm'
-import { Campaign, Credit, UploadedBase, UploadedData, ValidationBase } from '../entities'
+import { ApiKey, Campaign, Credit, Organization, UploadedBase, UploadedData, User, ValidationBase } from '../entities'
 
 /**
  * Database manager class
@@ -33,7 +33,7 @@ export class Database {
         username: process.env.DB_USERNAME || 'postgres',
         password: process.env.DB_PASSWORD || '123456',
         database: dbName,
-        entities: [Campaign, UploadedData, UploadedBase, Credit, ValidationBase]
+        entities: [Campaign, UploadedData, UploadedBase, Credit, ValidationBase, ApiKey, Organization, User]
       }
 
       connection = await createConnection(connectionOptions)

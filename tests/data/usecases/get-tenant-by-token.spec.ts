@@ -1,5 +1,5 @@
 import { IDecrypter } from '../../../src/data/protocols/criptography/decrypter'
-import { GetTenantByToken } from '../../../src/data/usecases/get-tenant-by-token/get-tenant-by-token'
+import { GetTenantByToken } from '../../../src/data/usecases/get-tenant/get-tenant-by-token'
 const makeDecrypter = (): IDecrypter => {
   class DecrypterStub implements IDecrypter {
     decrypt(_value: string): Promise<string> {
