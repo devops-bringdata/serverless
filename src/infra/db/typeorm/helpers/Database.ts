@@ -6,6 +6,7 @@ import { ApiKey, Campaign, Credit, Organization, UploadedBase, UploadedData, Use
  */
 export class Database {
   private connectionManager: ConnectionManager
+  private connection: Connection
 
   constructor() {
     this.connectionManager = getConnectionManager()
@@ -14,14 +15,12 @@ export class Database {
   public async getConnection(dbName: string): Promise<Connection> {
     const CONNECTION_NAME = dbName === 'core' ? 'core' : `default`
 
-    let connection: Connection
-
     if (this.connectionManager.has(CONNECTION_NAME)) {
       console.log(`Database.getConnection()-using existing connection ...${CONNECTION_NAME}`)
-      connection = this.connectionManager.get(CONNECTION_NAME)
+      this.connection = this.connectionManager.get(CONNECTION_NAME)
 
-      if (!connection.isConnected) {
-        connection = await connection.connect()
+      if (!this.connection.isConnected) {
+        this.connection = await this.connection.connect()
       }
     } else {
       console.log(`Database.getConnection()-creating connection ...${dbName === 'core' ? 'core' : 'default'}`)
@@ -38,9 +37,9 @@ export class Database {
         entities: dbName === 'core' ? coreEntities : defaultEntities
       }
 
-      connection = await createConnection(connectionOptions)
+      this.connection = await createConnection(connectionOptions)
     }
-
-    return connection
+    console.log(this.connection)
+    return this.connection
   }
 }
