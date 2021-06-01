@@ -15,11 +15,11 @@ import {
 
 @Entity({ name: 'api_keys' })
 export class ApiKey implements IApiKey {
-  @ManyToOne('Organization', 'apiKeys')
+  @ManyToOne('Organization', 'api_keys')
   @JoinColumn({ name: 'organization_uuid' })
   organization: IOrganization
 
-  @ManyToOne('User', 'apiKeys')
+  @ManyToOne('User', 'api_keys')
   @JoinColumn({ name: 'user_uuid' })
   user: IUser
 
