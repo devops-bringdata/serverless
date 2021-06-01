@@ -1,28 +1,8 @@
 import 'reflect-metadata'
-import { IApiKey } from '@/domain/models/api-key'
-import { IUser } from '@/domain/models/campaign/user'
-import { IOrganization } from '@/domain/models/organization'
-import {
-  Entity,
-  PrimaryColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  ManyToOne,
-  Column,
-  JoinColumn
-} from 'typeorm'
+import { Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, Column } from 'typeorm'
 
 @Entity({ name: 'api_keys' })
-export class ApiKey implements IApiKey {
-  @ManyToOne('Organization', 'api_keys')
-  @JoinColumn({ name: 'organization_uuid' })
-  organization: IOrganization
-
-  @ManyToOne('User', 'api_keys')
-  @JoinColumn({ name: 'user_uuid' })
-  user: IUser
-
+export class ApiKey {
   @PrimaryColumn({ type: 'uuid' })
   uuid: string
 

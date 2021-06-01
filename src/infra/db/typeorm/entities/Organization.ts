@@ -1,13 +1,9 @@
-import { IApiKey } from '@/domain/models/api-key'
 import { IOrganization } from '@/domain/models/organization'
 import 'reflect-metadata'
-import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm'
+import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
 
 @Entity({ name: 'organizations' })
 export class Organization implements IOrganization {
-  @OneToMany('ApiKey', 'organization_uuid')
-  apiKeys: IApiKey[]
-
   @PrimaryColumn({ type: 'uuid' })
   uuid: string
 

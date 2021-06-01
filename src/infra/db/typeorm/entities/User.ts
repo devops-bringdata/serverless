@@ -1,13 +1,9 @@
-import { IApiKey } from '@/domain/models/api-key'
 import { IUser } from '@/domain/models/campaign/user'
 import 'reflect-metadata'
-import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm'
+import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
 
 @Entity({ name: 'users' })
 export class User implements IUser {
-  @OneToMany('ApiKey', 'user_uuid')
-  apiKeys: IApiKey[]
-
   @PrimaryColumn({ type: 'uuid' })
   uuid: string
 
