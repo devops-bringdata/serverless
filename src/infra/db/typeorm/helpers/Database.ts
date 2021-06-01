@@ -6,7 +6,8 @@ import { ApiKey, Campaign, Credit, Organization, UploadedBase, UploadedData, Use
  */
 export class Database {
   private connectionManager: ConnectionManager
-  private connection: Connection
+  private coreConnection: Connection
+  private defaultConnection: Connection
 
   constructor() {
     this.connectionManager = getConnectionManager()
@@ -17,10 +18,11 @@ export class Database {
 
     if (this.connectionManager.has(CONNECTION_NAME)) {
       console.log(`Database.getConnection()-using existing connection ...${CONNECTION_NAME}`)
-      this.connection = this.connectionManager.get(CONNECTION_NAME)
+      this.coreConnection = this.connectionManager.get('core')
+      this.defaultConnection = this.connectionManager.get('default')
 
-      if (!this.connection.isConnected) {
-        this.connection = await this.connection.connect()
+      if (!this.coreConnection.isConnected) {
+        this.coreConnection = await this.coreConnection.connect()
       }
     } else {
       console.log(`Database.getConnection()-creating connection ...${dbName === 'core' ? 'core' : 'default'}`)
@@ -36,10 +38,11 @@ export class Database {
         database: dbName,
         entities: dbName === 'core' ? coreEntities : defaultEntities
       }
-
-      this.connection = await createConnection(connectionOptions)
+      if (dbName === 'core') this.coreConnection = await createConnection(connectionOptions)
+      if (dbName === 'default') this.defaultConnection = await createConnection(connectionOptions)
     }
-    console.log(this.connection)
-    return this.connection
+    console.log('core connection', this.coreConnection)
+    console.log('default connection', this.coreConnection)
+    return dbName === 'core' ? this.coreConnection : this.defaultConnection
   }
 }
