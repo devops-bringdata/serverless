@@ -17,8 +17,8 @@ export class Database {
     let connection: Connection
 
     if (this.connectionManager.has(CONNECTION_NAME)) {
-      console.log(`Database.getConnection()-using existing connection ...`)
-      connection = await this.connectionManager.get(CONNECTION_NAME)
+      console.log(`Database.getConnection()-using existing connection ...${CONNECTION_NAME}`)
+      connection = this.connectionManager.get(CONNECTION_NAME)
 
       if (!connection.isConnected) {
         connection = await connection.connect()
