@@ -24,17 +24,18 @@ export class Database {
         connection = await connection.connect()
       }
     } else {
-      console.log(`Database.getConnection()-creating connection ...`)
-
+      console.log(`Database.getConnection()-creating connection ...${dbName === 'core' ? 'core' : 'default'}`)
+      const coreEntities = [ApiKey, Organization, User]
+      const defaultEntities = [Campaign, UploadedData, UploadedBase, Credit, ValidationBase]
       const connectionOptions: ConnectionOptions = {
-        name: dbName === 'core' ? 'core' : 'defaul',
+        name: dbName === 'core' ? 'core' : 'default',
         type: 'postgres',
         host: process.env.DB_HOST || 'localhost',
         port: parseInt(process.env.DB_PORT) || 5432,
         username: process.env.DB_USERNAME || 'postgres',
         password: process.env.DB_PASSWORD || '123456',
         database: dbName,
-        entities: [Campaign, UploadedData, UploadedBase, Credit, ValidationBase, ApiKey, Organization, User]
+        entities: dbName === 'core' ? coreEntities : defaultEntities
       }
 
       connection = await createConnection(connectionOptions)
