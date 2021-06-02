@@ -8,8 +8,8 @@ export class GetTenantByApiKey implements IGetTenantByApiKey {
     const tenant = await this.getApiKeyRepository.get(apiKey)
     if (tenant) {
       return {
-        schemaName: tenant.organization.schemaName,
-        uuid: tenant.user.uuid,
+        schemaName: tenant.schemaName,
+        uuid: tenant.userId,
         expirationDate: tenant.expirationDate
       }
     }

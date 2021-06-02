@@ -1,10 +1,7 @@
-import { IUser } from './campaign/user'
-import { IOrganization } from './organization'
-
 export interface IApiKey {
   uuid: string
-  user: IUser
-  organization: IOrganization
+  userId: string
   key: string
   expirationDate: Date
+  schemaName: string
 }

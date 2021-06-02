@@ -8,10 +8,14 @@ export class GetApiKeyRepository implements IGetApiKey {
     const database = new Database()
     const connection = await database.getConnection('core')
     const apiKeyRepository = connection.manager.getRepository(ApiKey)
-    const result: IApiKey = await apiKeyRepository.findOne({
-      relations: ['organization', 'user'],
-      where: { key: apiKey }
-    })
+    const result: IApiKey = await apiKeyRepository
+      .findOne({
+        where: { key: apiKey }
+      })
+      .catch((error) => {
+        console.log(error)
+        return null
+      })
 
     return result
   }
