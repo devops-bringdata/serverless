@@ -168,7 +168,7 @@ functions:
     handler: src/main/events/validation/on-enrichment.handle
     events:
       - eventBridge:
-          eventBus: validations
+          eventBus: validationOnEnrichment
           pattern:
             source:
               - bringdata.validation.onEnrichment

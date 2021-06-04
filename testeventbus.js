@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk')
 function injection() {
-  const eventBridge = new AWS.EventBridge()
+  const eventBridge = new AWS.EventBridge({ region: 'sa-east-1' })
   return eventBridge.putEvents(
     {
       Entries: [
