@@ -31,6 +31,7 @@ export class EnrichRow implements IEnrichRow {
       else whereClause = (x) => x.header === variable.name && (x.value === '' || !x.value)
       const founded = rowContent.find(whereClause)
       if (founded) {
+        console.log(founded)
         const variable = campaign.variables.find((x) => x.name === founded.header)
         const question = variable.question
         const lgpdJustification = variable.lgpdJustification
@@ -42,7 +43,9 @@ export class EnrichRow implements IEnrichRow {
             lgpdJustification,
             variableType: variable.variableType,
             history: variable.history || false,
-            result: founded.value || null
+            result: founded.value || null,
+            fieldType: variable.fieldType,
+            inputConfigurations: variable.inputConfigurations
           })
         }
       }

@@ -8,4 +8,6 @@ export type IRowEnrichment = {
   history: boolean
   variableType: VariableTypeEnum
   result: string
+  fieldType: string
+  inputConfigurations: object
 }

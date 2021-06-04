@@ -1,3 +1,4 @@
+import { InputConfigurations } from './input-configurations'
 import { VariableTypeEnum } from './variable-type-enum'
 
 export interface ICampaignVariablesModel {
@@ -6,4 +7,6 @@ export interface ICampaignVariablesModel {
   lgpdJustification?: string
   history: boolean
   variableType: VariableTypeEnum
+  fieldType: string
+  inputConfigurations: InputConfigurations
 }

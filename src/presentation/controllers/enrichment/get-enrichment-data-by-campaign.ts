@@ -5,12 +5,12 @@ import { MissingParamError } from '@/presentation/errors'
 import { badRequest, ok } from '@/presentation/helpers'
 import { IController, IHttpResponse } from '@/presentation/protocols'
 
-export class GetEnrichmentDataByCreateCampaignController implements IController {
+export class GetEnrichmentDataByCampaignController implements IController {
   constructor(
     private dbFindUploadedDataByGroupId: IFindUploadedDataByGroupId,
     private findUploadedBaseRepository: IFindUploadedBase
   ) {}
-  async handle(request: GetEnrichmentDataByCreateCampaignController.Params, tenant: ITenant): Promise<IHttpResponse> {
+  async handle(request: GetEnrichmentDataByCampaignController.Params, tenant: ITenant): Promise<IHttpResponse> {
     if (!request.groupId) return badRequest(new MissingParamError('groupId'))
     const rows = await this.dbFindUploadedDataByGroupId.findRows(request.groupId, tenant.schemaName)
     const uploadedBase = await this.findUploadedBaseRepository.find(tenant.schemaName, request.groupId)
@@ -39,7 +39,7 @@ export class GetEnrichmentDataByCreateCampaignController implements IController 
   }
 }
 
-export namespace GetEnrichmentDataByCreateCampaignController {
+export namespace GetEnrichmentDataByCampaignController {
   export type Params = {
     groupId: string
   }
