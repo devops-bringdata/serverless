@@ -1,5 +1,5 @@
-import { ITenant } from '@/domain/models/tenant'
 import { ILogErrorRepository } from '@/data/protocols/log-error-repository'
+import { ITenant } from '@/domain/models/tenant'
 import { IController, IHttpRequest, IHttpResponse } from '@/presentation/protocols'
 
 export class LogControllerDecorator implements IController {

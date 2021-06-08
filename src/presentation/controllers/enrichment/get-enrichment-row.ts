@@ -1,11 +1,10 @@
-import { IGetEnrichmentRow } from '@/domain/usecases/enrichment/find-enrichment-row'
+import { IDecrypter } from '@/data/protocols'
+import { ICampaignModel } from '@/domain/models/campaign/campaign'
 import { ITenant } from '@/domain/models/tenant'
+import { IGetEnrichmentRow, IFindCampaign } from '@/domain/usecases'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, ok } from '@/presentation/helpers'
 import { IController, IHttpResponse } from '@/presentation/protocols'
-import { IDecrypter } from '@/data/protocols/criptography/decrypter'
-import { IFindCampaign } from '@/domain/usecases'
-import { ICampaignModel } from '@/domain/models/campaign/campaign'
 
 export class GetEnrichmentRowController implements IController {
   constructor(

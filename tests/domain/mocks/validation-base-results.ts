@@ -1,59 +1,59 @@
 import { IValidationBaseModel } from '@/domain/models/validation-bases/validation-base'
-import { time, lorem, random } from 'faker'
+import { time, lorem, datatype } from 'faker'
 
 export const mockValidationBase = (): IValidationBaseModel => {
   return {
-    uuid: random.uuid(),
+    uuid: datatype.uuid(),
     name: lorem.word(),
     addresses: {
-      chargedQuantity: random.number(),
-      quantity: random.number(),
-      finished: random.boolean(),
-      externalValidationId: random.uuid()
+      chargedQuantity: datatype.number(),
+      quantity: datatype.number(),
+      finished: datatype.boolean(),
+      externalValidationId: datatype.uuid()
     },
     emails: {
-      chargedQuantity: random.number(),
-      quantity: random.number(),
-      finished: random.boolean(),
-      externalValidationId: random.uuid()
+      chargedQuantity: datatype.number(),
+      quantity: datatype.number(),
+      finished: datatype.boolean(),
+      externalValidationId: datatype.uuid()
     },
     phones: {
-      chargedQuantity: random.number(),
-      quantity: random.number(),
-      finished: random.boolean(),
-      externalValidationId: random.uuid()
+      chargedQuantity: datatype.number(),
+      quantity: datatype.number(),
+      finished: datatype.boolean(),
+      externalValidationId: datatype.uuid()
     },
-    finished: random.boolean(),
+    finished: datatype.boolean(),
     storeName: time.recent().toString(),
-    userId: random.uuid()
+    userId: datatype.uuid()
   }
 }
 export const mockRefundValidationBase = (): IValidationBaseModel => {
-  const chargedQuantity = random.number()
-  const quantity = chargedQuantity + random.number()
+  const chargedQuantity = datatype.number()
+  const quantity = chargedQuantity + datatype.number()
   return {
-    uuid: random.uuid(),
+    uuid: datatype.uuid(),
     name: lorem.word(),
     addresses: {
       chargedQuantity,
       quantity,
-      finished: random.boolean(),
-      externalValidationId: random.uuid()
+      finished: datatype.boolean(),
+      externalValidationId: datatype.uuid()
     },
     emails: {
       chargedQuantity,
       quantity,
-      finished: random.boolean(),
-      externalValidationId: random.uuid()
+      finished: datatype.boolean(),
+      externalValidationId: datatype.uuid()
     },
     phones: {
       chargedQuantity,
       quantity,
-      finished: random.boolean(),
-      externalValidationId: random.uuid()
+      finished: datatype.boolean(),
+      externalValidationId: datatype.uuid()
     },
-    finished: random.boolean(),
+    finished: datatype.boolean(),
     storeName: time.recent().toString(),
-    userId: random.uuid()
+    userId: datatype.uuid()
   }
 }

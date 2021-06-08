@@ -1,11 +1,11 @@
 import { ILogErrorRepository } from '@/data/protocols/log-error-repository'
-import { LogLogDnaRepository } from '@/infra/log/logdna-repository/log'
-import { LogControllerDecorator } from '../decorators'
-import { IController } from '@/presentation/protocols'
-import { GetEnrichmentDataByCampaignController } from '@/presentation/controllers/enrichment/get-enrichment-data-by-campaign'
 import { DbFindUploadedDataByGroupId } from '@/data/usecases'
-import { FindUploadedDataByGroupIdRepository } from '@/infra/db/typeorm/repositories/uploaded-data/find-rows-to-enrich-repository'
-import { FindUploadedBaseRepository } from '@/infra/db/typeorm/repositories/uploaded-bases/find-uploaded-bases-repository'
+import { FindUploadedBaseRepository } from '@/infra/db/typeorm/repositories/uploaded-bases'
+import { FindUploadedDataByGroupIdRepository } from '@/infra/db/typeorm/repositories/uploaded-data'
+import { LogLogDnaRepository } from '@/infra/log/logdna-repository/log'
+import { GetEnrichmentDataByCampaignController } from '@/presentation/controllers'
+import { IController } from '@/presentation/protocols'
+import { LogControllerDecorator } from '../decorators'
 
 export const makeGetEnrichmentRowsController = (): IController => {
   const findUploadedDataByGroupIdRepository = new FindUploadedDataByGroupIdRepository()

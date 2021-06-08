@@ -1,13 +1,11 @@
-import { badRequest, ok } from '@/presentation/helpers'
-import { IDecrypter } from '@/data/protocols/criptography/decrypter'
-import { IUpdateUploadedData } from '@/domain/usecases/update-uploaded-data/update-uploaded-data'
-import { IController, IHttpResponse } from '@/presentation/protocols'
-import { MissingParamError } from '@/presentation/errors'
-import { IGetEnrichmentRow } from '@/domain/usecases/enrichment/find-enrichment-row'
-import { IChargeCredits } from '@/domain/usecases/charge/charge-credits'
+import { IDecrypter } from '@/data/protocols'
 import { IRowEnrichment } from '@/domain/models/uploaded-data/row-enrichment'
+import { IUpdateUploadedData, IGetEnrichmentRow, IChargeCredits } from '@/domain/usecases'
 import { IFindUploadedBase } from '@/domain/usecases/uploaded-bases/find-uploaded-base'
 import { IUpdateUploadedBase } from '@/domain/usecases/uploaded-bases/update-uploaded-base'
+import { MissingParamError } from '@/presentation/errors'
+import { badRequest, ok } from '@/presentation/helpers'
+import { IController, IHttpResponse } from '@/presentation/protocols'
 
 export class UpdateEnrichmentRowController implements IController {
   constructor(

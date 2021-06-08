@@ -2,7 +2,7 @@ import { DownloadEnrichedBaseController } from '@/presentation/controllers/enric
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, ok } from '@/presentation/helpers'
 import { IController } from '@/presentation/protocols'
-import { FindUploadedDataByGroupIdSpy } from '../../../data/mocks'
+import { FindUploadedDataByGroupIdSpy } from '../../../data/mocks/uploaded-data'
 type SutTypes = {
   findUploadedDataByGroupIdSpy: FindUploadedDataByGroupIdSpy
   sut: IController

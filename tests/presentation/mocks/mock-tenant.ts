@@ -1,9 +1,9 @@
 import { ITenant } from '@/domain/models/tenant'
-import { lorem, random } from 'faker'
+import { datatype, lorem } from 'faker'
 
 export const mockTenant = (): ITenant => {
   return {
-    uuid: random.uuid(),
+    uuid: datatype.uuid(),
     schemaName: lorem.word(7)
   }
 }

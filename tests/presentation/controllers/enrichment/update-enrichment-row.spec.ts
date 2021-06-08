@@ -3,12 +3,13 @@ import { UpdateEnrichmentRowController } from '@/presentation/controllers/enrich
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest } from '@/presentation/helpers'
 import { DecrypterSpy } from '../../../data/mocks/mock-cryptography'
-import { random } from 'faker'
-import { GetEnrichmentRowSpy, UpdateUploadedDataSpy } from '../../../data/mocks/mock-enrichment'
+import { datatype, random } from 'faker'
+import { GetEnrichmentRowSpy } from '../../../data/mocks/mock-enrichment'
 import { mockEnrichmentRow } from '../../../domain/mocks/enrichment'
 import { mockUploadedDataModel } from '../../../domain/mocks/uploaded-data'
 import { ChargeCreditsSpy } from '../../../data/mocks/credits'
 import { FindUploadedBaseSpy, UpdateUploadedBaseSpy } from '../../mocks/uploaded-base'
+import { UpdateUploadedDataSpy } from '../../../data/mocks/uploaded-data'
 
 type SutTypes = {
   sut: UpdateEnrichmentRowController
@@ -47,7 +48,7 @@ const makeSut = (): SutTypes => {
 let rowArray = []
 
 beforeEach(() => {
-  for (let i = 0; i < random.number(5); i++) {
+  for (let i = 0; i < datatype.number(5); i++) {
     rowArray.push(mockEnrichmentRow())
   }
 })
@@ -56,7 +57,7 @@ const mockRequest = {
   token: random.alphaNumeric()
 }
 const mockDecryptResponse = {
-  uuid: random.uuid(),
+  uuid: datatype.uuid(),
   schemaName: random.word()
 }
 describe('UpdateEnrichmentRowController', () => {
@@ -92,7 +93,7 @@ describe('UpdateEnrichmentRowController', () => {
       token: random.alphaNumeric()
     }
     const mockDecryptResponse = {
-      uuid: random.uuid(),
+      uuid: datatype.uuid(),
       schemaName: random.word()
     }
     jest.spyOn(decrypterSpy, 'decrypt').mockReturnValueOnce(

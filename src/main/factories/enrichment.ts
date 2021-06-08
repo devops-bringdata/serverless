@@ -1,15 +1,22 @@
-import { JwtAdapter } from '@/infra/criptography/jwt-adapter'
 import { ILogErrorRepository } from '@/data/protocols/log-error-repository'
-import { LogLogDnaRepository } from '@/infra/log/logdna-repository/log'
-import { LogControllerDecorator } from '../decorators'
-import { IController } from '@/presentation/protocols'
-import { FindCampaignPostgresRepository } from '@/infra/db/typeorm/repositories/campaign-repository/find-campaign'
-import { DbFindCampaign, DbFindUploadedDataByGroupId, EnrichRow, StartEnrichment } from '@/data/usecases'
-import { FindUploadedDataByGroupIdRepository } from '@/infra/db/typeorm/repositories/uploaded-data/find-rows-to-enrich-repository'
+import {
+  DbFindUploadedDataByGroupId,
+  DbFindCampaign,
+  DbUpdateUploadedData,
+  EnrichRow,
+  StartEnrichment
+} from '@/data/usecases'
+import { JwtAdapter } from '@/infra/criptography/jwt-adapter'
+import { FindCampaignPostgresRepository } from '@/infra/db/typeorm/repositories/campaign'
+import {
+  FindUploadedDataByGroupIdRepository,
+  UpdateUploadedDataRepository
+} from '@/infra/db/typeorm/repositories/uploaded-data'
 import { SendgridAdapter } from '@/infra/email-sender/sendgrid-adapter'
-import { UpdateUploadedDataRepository } from '@/infra/db/typeorm/repositories/uploaded-data/update-uploaded-data-repository'
-import { DbUpdateUploadedData } from '@/data/usecases/db-update-uploaded-data/db-update-uploaded-data'
+import { LogLogDnaRepository } from '@/infra/log/logdna-repository/log'
 import { StartEnrichmentController } from '@/presentation/controllers/enrichment/start-enrichment'
+import { IController } from '@/presentation/protocols'
+import { LogControllerDecorator } from '../decorators'
 
 export const makeStartEnrichmentController = (): IController => {
   const findUploadedDataByGroupIdRepository = new FindUploadedDataByGroupIdRepository()

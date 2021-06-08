@@ -1,7 +1,7 @@
 import { GetEnrichmentDataByCampaignController } from '@/presentation/controllers/enrichment/get-enrichment-data-by-campaign'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest } from '@/presentation/helpers'
-import { FindUploadedDataByGroupIdSpy } from '../../../data/mocks'
+import { FindUploadedDataByGroupIdSpy } from '../../../data/mocks/uploaded-data'
 import { FindUploadedBaseSpy } from '../../mocks/uploaded-base'
 type SutTypes = {
   findUploadedDataByGroupIdSpy: FindUploadedDataByGroupIdSpy

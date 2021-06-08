@@ -1,11 +1,13 @@
 import { ILogErrorRepository } from '@/data/protocols/log-error-repository'
+import { ChargeCreditsRepository } from '@/infra/db/typeorm/repositories/credits'
+import {
+  FindValidationBaseRepository,
+  UpdateValidationBaseRepository
+} from '@/infra/db/typeorm/repositories/validation-bases'
 import { LogLogDnaRepository } from '@/infra/log/logdna-repository/log'
-import { LogControllerDecorator } from '../decorators'
+import { FinishGroupValidationController } from '@/presentation/controllers'
 import { IController } from '@/presentation/protocols'
-import { FinishGroupValidationController } from '@/presentation/controllers/validation/finish-group-validation'
-import { FindValidationBaseRepository } from '@/infra/db/typeorm/repositories/validation-bases/find-validation-base'
-import { UpdateValidationBaseRepository } from '@/infra/db/typeorm/repositories/validation-bases/update-validation-base'
-import { ChargeCreditsRepository } from '@/infra/db/typeorm/repositories/credits-repository/charge-credits'
+import { LogControllerDecorator } from '../decorators'
 
 export const makeFinishGroupValidationController = (): IController => {
   const findValidationBaseRepository = new FindValidationBaseRepository()

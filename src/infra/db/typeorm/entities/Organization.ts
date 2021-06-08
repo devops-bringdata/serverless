@@ -1,5 +1,5 @@
-import { IOrganization } from '@/domain/models/organization'
 import 'reflect-metadata'
+import { IOrganization } from '@/domain/models/organization'
 import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
 
 @Entity({ name: 'organizations' })

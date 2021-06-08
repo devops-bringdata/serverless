@@ -1,6 +1,5 @@
 import { JwtAdapter } from '../../../src/infra/criptography/jwt-adapter'
 import jwt from 'jsonwebtoken'
-import { throwError } from '../../domain/mocks'
 jest.mock('jsonwebtoken', () => ({
   async sign(): Promise<string> {
     return 'any_token'
@@ -21,17 +20,10 @@ describe('JWT Adapter', () => {
     expect(verifySpy).toHaveBeenCalledWith('any_token', 'secret')
   })
 
-  test('Should return a value on verify success', async () => {
+  test('Should return a value on encrypt', async () => {
     const sut = makeSut()
-    const value = await sut.decrypt('any_token')
-    expect(value).toBe('any_value')
-  })
-
-  test('Should throw if verify throws', async () => {
-    const sut = makeSut()
-    jest.spyOn(jwt, 'verify').mockImplementationOnce(throwError)
-    const promise = sut.decrypt('any_token')
-    await expect(promise).rejects.toThrow()
+    const value = await sut.encrypt('any_token')
+    expect(value).toBeTruthy()
   })
 
   test('Should call format with correct values', async () => {

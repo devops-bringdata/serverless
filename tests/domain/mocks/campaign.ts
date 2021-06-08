@@ -1,6 +1,6 @@
 import { ICampaignModel } from '@/domain/models/campaign/campaign'
 import { IFindCampaign } from '@/domain/usecases'
-import { internet, lorem, random, name } from 'faker'
+import { internet, lorem, random, name, datatype } from 'faker'
 
 export const makeFindCampaign = (): IFindCampaign => {
   class FindCampaignStub implements IFindCampaign {
@@ -8,17 +8,19 @@ export const makeFindCampaign = (): IFindCampaign => {
     emailVariable = random.word()
     email = internet.email()
     response = {
-      uuid: random.uuid(),
+      uuid: datatype.uuid(),
       name: random.words(3),
-      owner: random.uuid(),
+      owner: datatype.uuid(),
       emailVariable: this.emailVariable,
       variables: [
         {
           name: this.variableName,
           question: `What is your ${this.variableName}`,
-          history: random.boolean(),
+          history: datatype.boolean(),
           variableType: 0,
-          lgpdJustification: lorem.paragraph(3)
+          lgpdJustification: lorem.paragraph(3),
+          fieldType: random.word(),
+          inputConfigurations: {}
         }
       ],
       collectWays: ['EMAIL', 'SMS'],
@@ -43,9 +45,9 @@ export const makeFindCampaign = (): IFindCampaign => {
 
 export const mockCampaignModel = (): ICampaignModel => {
   return {
-    uuid: random.uuid(),
+    uuid: datatype.uuid(),
     name: lorem.word(),
-    owner: random.uuid(),
+    owner: datatype.uuid(),
     emailVariable: lorem.word(),
     variables: [
       {
@@ -53,7 +55,9 @@ export const mockCampaignModel = (): ICampaignModel => {
         question: lorem.sentence(4),
         history: true,
         variableType: 0,
-        lgpdJustification: lorem.sentence(6)
+        lgpdJustification: lorem.sentence(6),
+        fieldType: random.word(),
+        inputConfigurations: {}
       }
     ],
     collectWays: ['EMAIL', 'SMS'],

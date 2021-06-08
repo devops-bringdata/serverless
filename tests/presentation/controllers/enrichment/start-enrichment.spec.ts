@@ -2,7 +2,7 @@ import { ITenant } from '@/domain/models/tenant'
 import { StartEnrichmentController } from '@/presentation/controllers/enrichment/start-enrichment'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest } from '@/presentation/helpers'
-import { random, time } from 'faker'
+import { datatype, time } from 'faker'
 import { StartEnrichmentSpy } from '../../mocks/enrichment'
 
 type SutTypes = {
@@ -19,13 +19,13 @@ const makeSut = (): SutTypes => {
 }
 const mockRequest = (): StartEnrichmentController.Request => {
   return {
-    campaignId: random.uuid(),
+    campaignId: datatype.uuid(),
     groupId: time.recent().toString()
   }
 }
 const mockTenant = (): ITenant => {
   return {
-    uuid: random.uuid(),
+    uuid: datatype.uuid(),
     schemaName: 'bringdatajest'
   }
 }

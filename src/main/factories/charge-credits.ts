@@ -1,7 +1,7 @@
 import { ILogErrorRepository } from '@/data/protocols/log-error-repository'
-import { ChargeCreditsRepository } from '@/infra/db/typeorm/repositories/credits-repository/charge-credits'
+import { ChargeCreditsRepository } from '@/infra/db/typeorm/repositories/credits'
 import { LogLogDnaRepository } from '@/infra/log/logdna-repository/log'
-import { ChargeCreditsController } from '@/presentation/controllers/charge/charge-credits'
+import { ChargeCreditsController } from '@/presentation/controllers'
 import { IController } from '@/presentation/protocols'
 import { LogControllerDecorator } from '../decorators'
 

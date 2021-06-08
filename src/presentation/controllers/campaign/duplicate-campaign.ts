@@ -1,5 +1,5 @@
 import { ITenant } from '@/domain/models/tenant'
-import { IDuplicateCampaign } from '@/domain/usecases/campaign/duplicate-campaign'
+import { IDuplicateCampaign } from '@/domain/usecases'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, ok } from '@/presentation/helpers'
 import { IController, IHttpResponse } from '@/presentation/protocols'

@@ -1,11 +1,10 @@
-import { IValidation } from '@/presentation/helpers/validators/validation'
-import { ITenant } from '@/domain/models/tenant'
-import { ICreateCampaign } from '@/domain/usecases/campaign/create-campaign'
-import { badRequest, ok, serverError } from '@/presentation/helpers'
-import { IController, IHttpResponse } from '@/presentation/protocols'
-import { IStartEnrichment } from '@/domain/usecases/enrichment/start-enrichment'
 import { ICampaignVariablesModel } from '@/domain/models/campaign/campaignVariables'
 import IEmailTemplateModel from '@/domain/models/campaign/emailTemplate'
+import { ITenant } from '@/domain/models/tenant'
+import { ICreateCampaign, IStartEnrichment } from '@/domain/usecases'
+import { badRequest, ok, serverError } from '@/presentation/helpers'
+import { IValidation } from '@/presentation/helpers/validators/validation'
+import { IController, IHttpResponse } from '@/presentation/protocols'
 
 export class CreateCampaignController implements IController {
   constructor(

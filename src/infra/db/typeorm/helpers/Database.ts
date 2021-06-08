@@ -5,18 +5,18 @@ import { ApiKey, Campaign, Credit, UploadedBase, UploadedData, ValidationBase } 
  * Database manager class
  */
 export class Database {
-  private connectionManager: ConnectionManager
-  private connection: Connection
+  connectionManager: ConnectionManager
+  CONNECTION_NAME: string
+  connection: Connection
   constructor() {
     this.connectionManager = getConnectionManager()
   }
 
   public async getConnection(dbName: string): Promise<Connection> {
-    const CONNECTION_NAME = dbName === 'core' ? 'core' : `default`
+    this.CONNECTION_NAME = dbName === 'core' ? 'core' : `default`
 
-    if (this.connectionManager.has(CONNECTION_NAME)) {
-      console.log(`Database.getConnection()-using existing connection ...`)
-      if (CONNECTION_NAME === 'core') {
+    if (this.connectionManager.has(this.CONNECTION_NAME)) {
+      if (this.CONNECTION_NAME === 'core') {
         this.connection = this.connectionManager.get('core')
         if (!this.connection.isConnected) {
           this.connection = await this.connection.connect()
@@ -51,7 +51,7 @@ export class Database {
         database: dbName,
         entities: [Campaign, UploadedData, UploadedBase, Credit, ValidationBase]
       }
-      if (CONNECTION_NAME === 'core') {
+      if (this.CONNECTION_NAME === 'core') {
         this.connection = await createConnection(coreOptions)
       } else {
         this.connection = await createConnection(defaultOptions)
@@ -59,5 +59,9 @@ export class Database {
     }
 
     return this.connection
+  }
+
+  public async disconnect() {
+    if (this.connection) return await this.connection.close()
   }
 }

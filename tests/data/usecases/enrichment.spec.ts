@@ -1,8 +1,9 @@
-import { StartEnrichment } from '../../../src/data/usecases/start-enrichment/start-enrichment'
+import { StartEnrichment } from '../../../src/data/usecases/db/enrichment/start'
 import { MissingParamError } from '../../../src/presentation/errors'
 import { badRequest } from '../../../src/presentation/helpers'
 import { IStartEnrichment } from '../../../src/domain/usecases/enrichment/start-enrichment'
-import { FindCampaignRepositorySpy, EnrichRowSpy, FindUploadedDataByGroupIdSpy } from '../mocks'
+import { FindCampaignRepositorySpy, EnrichRowSpy } from '../mocks'
+import { FindUploadedDataByGroupIdSpy } from '../mocks/uploaded-data'
 
 type SutTypes = {
   sut: IStartEnrichment

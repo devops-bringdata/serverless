@@ -1,7 +1,7 @@
 import { ICampaignVariablesModel } from '@/domain/models/campaign/campaignVariables'
 import IEmailTemplateModel from '@/domain/models/campaign/emailTemplate'
 import { ITenant } from '@/domain/models/tenant'
-import { IUpdateCampaign } from '@/domain/usecases/campaign/update-campaign'
+import { IUpdateCampaign } from '@/domain/usecases'
 import { ok } from '@/presentation/helpers'
 import { IController, IHttpResponse } from '@/presentation/protocols'
 

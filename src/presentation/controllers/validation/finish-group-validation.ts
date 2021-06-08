@@ -1,7 +1,5 @@
 import { ITenant } from '@/domain/models/tenant'
-import { IChargeCredits } from '@/domain/usecases/charge/charge-credits'
-import { IFindValidationBase } from '@/domain/usecases/validation-bases/find-validation-base'
-import { IUpdateValidationBase } from '@/domain/usecases/validation-bases/update-validation-base'
+import { IFindValidationBase, IUpdateValidationBase, IChargeCredits } from '@/domain/usecases'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, ok } from '@/presentation/helpers'
 import { IController, IHttpResponse } from '@/presentation/protocols'

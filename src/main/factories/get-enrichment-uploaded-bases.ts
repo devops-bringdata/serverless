@@ -1,7 +1,7 @@
 import { ILogErrorRepository } from '@/data/protocols/log-error-repository'
-import { GetUploadedBasesRepository } from '@/infra/db/typeorm/repositories/uploaded-bases/get-uploaded-bases-repository'
+import { GetUploadedBasesRepository } from '@/infra/db/typeorm/repositories/uploaded-bases'
 import { LogLogDnaRepository } from '@/infra/log/logdna-repository/log'
-import { GetEnrichmentUploadedBasesController } from '@/presentation/controllers/uploaded-bases/get-enrichment-uploaded-bases'
+import { GetEnrichmentUploadedBasesController } from '@/presentation/controllers'
 import { IController } from '@/presentation/protocols'
 import { LogControllerDecorator } from '../decorators'
 

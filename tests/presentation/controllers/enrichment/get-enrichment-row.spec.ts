@@ -3,7 +3,7 @@ import { badRequest } from '@/presentation/helpers'
 import { IController } from '@/presentation/protocols'
 import { GetEnrichmentRowController } from '@/presentation/controllers/enrichment/get-enrichment-row'
 import { GetEnrichmentRowSpy, DecrypterSpy, FindCampaignRepositorySpy } from '../../../data/mocks'
-import { random } from 'faker'
+import { datatype, random } from 'faker'
 
 type SutTypes = {
   sut: IController
@@ -26,7 +26,7 @@ describe('GetEnrichmentRowController', () => {
   test('should call get method with correct row id', async () => {
     const { sut, getEnrichmentRowSpy, decrypterSpy } = makeSut()
     const mockDecryptResponse = {
-      uuid: random.uuid(),
+      uuid: datatype.uuid(),
       schemaName: random.word()
     }
     jest.spyOn(decrypterSpy, 'decrypt').mockReturnValueOnce(new Promise((resolve) => resolve(mockDecryptResponse)))

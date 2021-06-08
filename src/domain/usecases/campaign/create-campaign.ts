@@ -1,6 +1,6 @@
-import { ICampaignVariablesModel } from '../../models/campaign/campaignVariables'
-import IEmailTemplateModel from '../../models/campaign/emailTemplate'
-import { ICampaignModel } from '../../models/campaign/campaign'
+import { ICampaignModel } from '@/domain/models/campaign/campaign'
+import { ICampaignVariablesModel } from '@/domain/models/campaign/campaignVariables'
+import IEmailTemplateModel from '@/domain/models/campaign/emailTemplate'
 
 export interface ICreateCampaign {
   create: (campaign: ICreateCampaign.Params, tenant: string) => Promise<ICampaignModel>

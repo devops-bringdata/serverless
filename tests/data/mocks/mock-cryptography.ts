@@ -1,9 +1,9 @@
 import { IDecrypter } from '@/data/protocols/criptography/decrypter'
-import { random } from 'faker'
+import { datatype, random } from 'faker'
 
 export class DecrypterSpy implements IDecrypter {
   payload: { uuid: string; schemaName: string } = {
-    uuid: random.uuid(),
+    uuid: datatype.uuid(),
     schemaName: random.word()
   }
   encryptedText: string
