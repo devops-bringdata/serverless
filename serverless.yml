@@ -152,13 +152,13 @@ functions:
       - http:
           method: any
           path: finish-group-validation
-  validateSingleEmail:
-    handler: src/main/routes/validate-single-email.handle
+  validateEnrichmentEmail:
+    handler: src/main/routes/validate-enrichment-email.handle
     events:
       - http:
           cors: true
           method: post
-          path: validate-single-email
+          path: validate-enrichment-email
   health:
     handler: src/main/routes/health.handle
     events:

@@ -5,9 +5,9 @@ import { ValidateSingleEmailController } from '@/presentation/controllers/valida
 import { IController } from '@/presentation/protocols'
 import { LogControllerDecorator } from '../decorators'
 
-export const makeGetValidateSingleEmailController = (): IController => {
+export const makeGetValidateEnrichmentEmailController = (): IController => {
   const emailValidationAdapter = new ValidateEmail()
-  const validateSingleEmailControler = new ValidateSingleEmailController(emailValidationAdapter)
+  const validateSingleEmailControler = new ValidateSingleEmailController(emailValidationAdapter, false)
   let logErrorRepository: ILogErrorRepository = new LogLogDnaRepository()
   return new LogControllerDecorator(validateSingleEmailControler, logErrorRepository)
 }

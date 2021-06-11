@@ -1,5 +1,5 @@
 export interface IValidateEmail {
-  validate(email: string): Promise<IValidateEmail.EmailValidationResponse>
+  validate(email: string, validateExternally: boolean, timeout: number): Promise<IValidateEmail.EmailValidationResponse>
 }
 
 export namespace IValidateEmail {
