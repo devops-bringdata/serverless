@@ -156,7 +156,8 @@ functions:
     handler: src/main/routes/validate-single-email.handle
     events:
       - http:
-          method: any
+          cors: true
+          method: post
           path: validate-single-email
   health:
     handler: src/main/routes/health.handle

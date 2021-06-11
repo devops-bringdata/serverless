@@ -19,6 +19,7 @@
     "@logdna/logger": "^2.2.4",
     "@sendgrid/mail": "^7.4.2",
     "aws-sdk": "^2.851.0",
+    "deep-email-validator": "^0.1.18",
     "express": "^4.17.1",
     "faker": "^5.4.0",
     "fast-glob": "^3.2.5",
